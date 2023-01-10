@@ -32,7 +32,6 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.11.18",
     "@types/supertest": "^2.0.12",
-    
     "sqlite3": "^5.0.8",
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.5",
