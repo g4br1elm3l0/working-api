@@ -19,6 +19,8 @@
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
     "typeorm": "^0.3.11",
     "yup": "^0.32.11"
   },
