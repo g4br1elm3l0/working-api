@@ -11,7 +11,7 @@
     "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose --runInBand"
   },
   "dependencies": {
-    "@types/jest": "^28.1.4",
+    "@types/jest": "^29.2.5",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
@@ -21,9 +21,9 @@
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
+    "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.11",
-    "ts-jest": "^28.0.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {
