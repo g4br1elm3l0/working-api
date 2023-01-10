@@ -6,7 +6,7 @@ class Address {
     id: string;
 
     @Column({ length: 8 })
-    zipCode: number;
+    zipCode: string;
 
     @Column()
     district: string;

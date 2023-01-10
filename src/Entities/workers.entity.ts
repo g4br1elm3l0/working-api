@@ -40,7 +40,7 @@ class Workers {
     profileImg: string;
 
     @Column({ length: 11 })
-    telephone: number;
+    telephone: string;
 
     @Column({ default: true })
     isActive: boolean;
