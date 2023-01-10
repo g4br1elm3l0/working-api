@@ -11,11 +11,13 @@
     "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest --verbose --runInBand"
   },
   "dependencies": {
+    "@types/jest": "^28.1.4",
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
+    "jest": "^28.1.2",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
@@ -27,11 +29,10 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.15",
-    "@types/jest": "^28.1.4",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.11.18",
     "@types/supertest": "^2.0.12",
-    "jest": "^28.1.2",
+    
     "sqlite3": "^5.0.8",
     "supertest": "^6.2.4",
     "ts-jest": "^28.0.5",
