@@ -4,13 +4,12 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    BeforeUpdate,
-    BeforeInsert,
-    DeleteDateColumn,
     OneToOne,
     JoinColumn,
-    ManyToOne
+    ManyToOne,
+    DeleteDateColumn
 } from "typeorm";
+import Categories from "./categories.entity";
 import Location from "./locations.entity";
 import Users from "./users.entity";
 
@@ -42,6 +41,9 @@ class UserServices{
 
     @ManyToOne(() => Users, users => users.services)
     user: Users;
+
+    @ManyToOne(() => Categories, categories => categories.services)
+    category: Categories;
 
     @OneToOne(() => Location)
     @JoinColumn()
