@@ -9,10 +9,12 @@ import {
     BeforeInsert,
     DeleteDateColumn,
     OneToOne,
-    JoinColumn
+    JoinColumn,
+    OneToMany
 } from "typeorm";
 import Address from "./addresses.entity";
 import Location from "./locations.entity";
+import UserServices from "./userServices.entity";
 
 @Entity("users")
 class Users{
@@ -41,7 +43,7 @@ class Users{
     telephone: number;
 
     @Column()
-    isActive: string;
+    isActive: boolean;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -49,7 +51,7 @@ class Users{
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @DeleteDateColumn()
+    @DeleteDateColumn({nullable: true})
     deletedAt: Date;
 
     @OneToOne(() => Address)
@@ -60,11 +62,14 @@ class Users{
     @JoinColumn()
     location: Location;
 
+    @OneToMany(() => UserServices, userServices => userServices.user)
+    services: UserServices[]; 
+
     @BeforeUpdate()
     @BeforeInsert()
     hashPassword(){
-        this.password = hashSync(this.password, 10)
-    }
+        this.password = hashSync(this.password, 10);
+    };
 };
 
-export default Users
+export default Users;

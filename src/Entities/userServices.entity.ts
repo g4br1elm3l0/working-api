@@ -8,39 +8,28 @@ import {
     BeforeInsert,
     DeleteDateColumn,
     OneToOne,
-    JoinColumn
+    JoinColumn,
+    ManyToOne
 } from "typeorm";
-import Address from "./addresses.entity";
 import Location from "./locations.entity";
+import Users from "./users.entity";
 
-@Entity("users")
-class Users{
+@Entity("userServices")
+class UserServices{
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
     @Column({length: 50})
-    name: string;
+    title: string;
 
-    @Column({length: 100, unique: true})
-    email: string;
+    @Column({length: 300})
+    description: string;
 
-    @Column()
-    password: string;
+    @Column({default: false})
+    femaleOnly: boolean;
 
-    @Column()
-    gender: "masculino" | "feminino";
-
-    @Column({type: Date})
-    birthday: string;
-
-    @Column()
-    profileImg: string;
-
-    @Column({length: 11})
-    telephone: number;
-
-    @Column()
-    isActive: string;
+    @Column({default: "pendente"})
+    status: "pendente" | "aceito" | "resolvido" | "removido";
 
     @CreateDateColumn()
     createdAt: Date;
@@ -48,22 +37,15 @@ class Users{
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @DeleteDateColumn()
+    @DeleteDateColumn({nullable: true})
     deletedAt: Date;
 
-    @OneToOne(() => Address)
-    @JoinColumn()
-    address: Address;
+    @ManyToOne(() => Users, users => users.services)
+    user: Users;
 
     @OneToOne(() => Location)
     @JoinColumn()
     location: Location;
-
-    @BeforeUpdate()
-    @BeforeInsert()
-    hashPassword(){
-        this.password = hashSync(this.password, 10)
-    }
 };
 
 export default UserServices;
