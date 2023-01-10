@@ -7,15 +7,17 @@ import {
     DeleteDateColumn, 
     Entity, 
     JoinColumn, 
+    OneToMany, 
     OneToOne, 
     PrimaryGeneratedColumn, 
     UpdateDateColumn 
 } from "typeorm";
 import Address from "./addresses.entity";
 import Location from "./locations.entity";
+import WorkerServices from "./workerServices.entity";
 
 @Entity("workers")
-class Worker {
+class Workers {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -60,6 +62,9 @@ class Worker {
     @JoinColumn()
     location: Location;
 
+    @OneToMany( () => WorkerServices, workerService => workerService.worker )
+    services: WorkerServices[];
+
     @BeforeUpdate()
     @BeforeInsert() 
     hashpassword() {
@@ -70,4 +75,4 @@ class Worker {
     };
 };
 
-export default Worker;
+export default Workers;
