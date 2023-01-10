@@ -1,4 +1,3 @@
-import { hashSync } from "bcryptjs";
 import { 
     Entity,
     PrimaryGeneratedColumn,
@@ -67,4 +66,4 @@ class Users{
     }
 };
 
-export default Users
+export default UserServices;
