@@ -8,7 +8,7 @@ import AppDataSource from "./data-source";
             console.error("Error during Data Source initialization", err)
         });
 
-    app.listen(5432, () => {
+    app.listen(3000, () => {
         console.log("Server is running in PORT: https://localhost:3000")
     })
 })()
