@@ -40,6 +40,34 @@ describe("/users", () => {
         expect(response.body.profileImg).toEqual("profileleo");
         expect(response.body.telephone).toEqual("67999956325");
         expect(response.body.isActive).toEqual(true);
+        expect(response.body.isWorker).toEqual(false);
+
+        expect(response.status).toBe(201);
+    });
+
+    test("POST /users - Must be able to create worker", async () => {
+        const response = await request(app).post("/users").send(mockedUserWorker);
+
+        expect(response.body).toHaveProperty("id");;
+        expect(response.body).toHaveProperty("name");
+        expect(response.body).toHaveProperty("email");
+        expect(response.body).not.toHaveProperty("password");
+        expect(response.body).toHaveProperty("gender");
+        expect(response.body).toHaveProperty("birthday");
+        expect(response.body).toHaveProperty("profileImg");
+        expect(response.body).toHaveProperty("telephone");
+        expect(response.body).toHaveProperty("isActive");
+        expect(response.body).toHaveProperty("isWorker");
+        expect(response.body).toHaveProperty("createdAt");
+        expect(response.body).toHaveProperty("updatedAt");
+        
+        expect(response.body.name).toEqual("leonardo");
+        expect(response.body.email).toEqual("leonardo@mail.com");
+        expect(response.body.birthday).toEqual("02/10/98");
+        expect(response.body.gender).toEqual("masculino");
+        expect(response.body.profileImg).toEqual("profileleo");
+        expect(response.body.telephone).toEqual("67999956325");
+        expect(response.body.isActive).toEqual(true);
         expect(response.body.isWorker).toEqual(true);
 
         expect(response.status).toBe(201);
