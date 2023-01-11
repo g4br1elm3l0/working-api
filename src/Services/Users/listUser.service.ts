@@ -6,7 +6,9 @@ import Users from './../../Entities/users.entity';
 export const listUserService = async (): Promise<IUserResponse[]> => {
 
     const userRepo = dataSource.getRepository(Users);
-    const users = await userRepo.find();
+    const users = await userRepo.findBy({
+        isWorker: false
+    });
 
     const correctUsersFormat = usersWithoutPasswordSerializer.validate(users, {
         stripUnknown: true
