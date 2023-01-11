@@ -26,3 +26,5 @@ export const requestUsersSerializer: SchemaOf<IUserRequest> = yup.object().shape
     telephone:yup.string().required(),
     isWorker: yup.boolean().required()
 })
+
+export const usersWithoutPasswordSerializer: SchemaOf<IUserResponse[]> = yup.array(responseUsersSerializer);
