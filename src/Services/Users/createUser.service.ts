@@ -1,8 +1,8 @@
 import dataSource from '../../data-source';
 import Users from './../../Entities/users.entity';
-import { IUsersRequest } from './../../Interfaces/Users/index';
+import { IUserRequest } from './../../Interfaces/Users/index';
 
-export const createUserService = async (userData: IUsersRequest): Promise<Users> => {
+export const createUserService = async (userData: IUserRequest): Promise<Users> => {
     const userRepo = dataSource.getRepository(Users);
 
     const user = userRepo.create(userData);
