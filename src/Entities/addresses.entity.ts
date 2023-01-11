@@ -22,6 +22,7 @@ class Address {
 
     @Column({ length: 2 })
     state: string;
+
 };
 
 export default Address;
