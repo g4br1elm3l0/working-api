@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import { createUserService } from '../Services/Users/createUser.service';
 import { IUsersRequest } from './../Interfaces/Users/index';
