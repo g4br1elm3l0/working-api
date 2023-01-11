@@ -1,6 +1,6 @@
-import { IUsersRequestWithIsWorker } from "../../../Interfaces/Users/testMock";
+import { IUserRequest } from "../../../Interfaces/Users";
 
-export const mockedUserRequest : IUsersRequestWithIsWorker = {
+export const mockedUserRequest : IUserRequest = {
     name: "leonardo",
     email: "leonardo@mail.com",
     password: "leo1234",
