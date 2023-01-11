@@ -68,5 +68,12 @@ describe("/users", () => {
         expect(response.status).toBe(401);
     });
 
-    
+    test("DELETE /users/:id - Should not be able to delete user without authentication", async () => {
+       const userResponse = await request(app).post("/login").send(mockedUserLogin);
+       const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${userResponse.body.token}`);
+       const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`);
+
+       expect(response.body).toHaveProperty("message");
+       expect(response.status).toBe(401);
+    });
 });
