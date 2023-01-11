@@ -5,8 +5,8 @@ import { createUserController, listUsersController, listWorkersController } from
 const userRouter = Router()
 
 
-userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController)
-userRouter.get('', listUsersController)
+userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController) // Create an user
+userRouter.get('', listUsersController) // List
 userRouter.get('/workers', listWorkersController)
 userRouter.get('/:id', )
 userRouter.get('/:id/workers',)
