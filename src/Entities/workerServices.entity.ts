@@ -9,6 +9,7 @@ import {
 import Users from "./users.entity";
 import UserServices from "./userServices.entity";
 
+
 @Entity("workerServices")
 class WorkerServices {
     @PrimaryGeneratedColumn("uuid")
@@ -17,7 +18,7 @@ class WorkerServices {
     @Column({ nullable: true })
     acceptedAt: Date;
 
-    @ManyToOne( () => Users, user => user.id)
+    @ManyToOne(() => Users, user => user.id)
     user: Users;
 
     @OneToOne(() => UserServices)

@@ -5,6 +5,7 @@ const userRouter = Router()
 
 userRouter.post('', createUserController)
 userRouter.get('', listUserController)
+userRouter.patch('',)
 
 
 export default userRouter
