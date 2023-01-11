@@ -34,7 +34,7 @@ class Workers {
     birthday: string;
 
     @Column()
-    gender: "feminino" | "masculino";
+    gender: string;
 
     @Column()
     profileImg: string;

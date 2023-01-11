@@ -1,9 +1,10 @@
 import { Router  } from "express";
-import { listWorkerController } from "../Controllers/workers.controller";
+import { createWorkerController, listWorkerController } from "../Controllers/workers.controller";
 
 
 const workersRoutes = Router()
 
 workersRoutes.get('', listWorkerController)
+workersRoutes.post('', createWorkerController)
 
 export default workersRoutes
