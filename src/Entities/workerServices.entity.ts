@@ -18,10 +18,10 @@ class WorkerServices {
     @Column({ nullable: true })
     acceptedAt: Date;
 
-    @ManyToOne( () => Users, user => user.id)
+    @ManyToOne(() => Users, user => user.id)
     user: Users;
 
-    @OneToOne( () => UserServices)
+    @OneToOne(() => UserServices)
     @JoinColumn()
     userService: UserServices;
 };

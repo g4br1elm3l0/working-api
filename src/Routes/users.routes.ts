@@ -1,9 +1,17 @@
 import { Router } from "express";
-import { createUserController } from './../Controllers/users.controllers';
+import ensureIsValidDataMiddleware from "../Middlewares/ensureIsValidData.middleware";
+import { requestUsersSerializer } from "../Serializers/users.serializers";
+import { createUserController, listUsersController, listWorkersController } from './../Controllers/users.controllers';
 const userRouter = Router()
 
 
-userRouter.post('', createUserController)
+userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController)
+userRouter.get('', listUsersController)
+userRouter.get('/workers', listWorkersController)
+userRouter.get('/:id', )
+userRouter.get('/:id/workers',)
+
+userRouter.patch('',)
 
 
 export default userRouter

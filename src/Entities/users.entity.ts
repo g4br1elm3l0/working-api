@@ -1,10 +1,8 @@
 import { hashSync } from "bcryptjs";
 import {
     BeforeInsert, BeforeUpdate, Column,
-    CreateDateColumn, DeleteDateColumn, Entity, JoinColumn,
-    OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn
+    CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn
 } from "typeorm";
-import Location from "./locations.entity";
 import UserServices from "./userServices.entity";
 
 @Entity("users")

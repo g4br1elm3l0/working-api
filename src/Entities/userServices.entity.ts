@@ -1,31 +1,26 @@
-import { 
-    Entity,
-    PrimaryGeneratedColumn,
+import {
     Column,
-    CreateDateColumn,
-    UpdateDateColumn,
-    ManyToOne,
-    DeleteDateColumn
+    CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn
 } from "typeorm";
 import Categories from "./categories.entity";
 import Location from "./locations.entity";
 import Users from "./users.entity";
 
 @Entity("userServices")
-class UserServices{
+class UserServices {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({length: 50})
+    @Column({ length: 50 })
     title: string;
 
-    @Column({length: 300})
+    @Column({ length: 300 })
     description: string;
 
-    @Column({default: false})
+    @Column({ default: false })
     femaleOnly: boolean;
 
-    @Column({default: "pendente"})
+    @Column({ default: "pendente" })
     status: "pendente" | "aceito" | "resolvido" | "removido";
 
     @CreateDateColumn()
@@ -34,7 +29,7 @@ class UserServices{
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @DeleteDateColumn({nullable: true})
+    @DeleteDateColumn({ nullable: true })
     deletedAt: Date;
 
     @ManyToOne(() => Users, users => users.services)
@@ -43,7 +38,7 @@ class UserServices{
     @ManyToOne(() => Categories, categories => categories.services)
     category: Categories;
 
-    @ManyToOne( () => Location, location => location.services)
+    @ManyToOne(() => Location, location => location.services)
     location: Location;
 };
 
