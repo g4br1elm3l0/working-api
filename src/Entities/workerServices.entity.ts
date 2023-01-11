@@ -9,6 +9,7 @@ import {
 import Users from "./users.entity";
 import UserServices from "./userServices.entity";
 
+
 @Entity("workerServices")
 class WorkerServices {
     @PrimaryGeneratedColumn("uuid")
@@ -20,7 +21,7 @@ class WorkerServices {
     @ManyToOne( () => Users, user => user.id)
     user: Users;
 
-    @OneToOne(() => UserServices)
+    @OneToOne( () => UserServices)
     @JoinColumn()
     userService: UserServices;
 };

@@ -4,8 +4,6 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    OneToOne,
-    JoinColumn,
     ManyToOne,
     DeleteDateColumn
 } from "typeorm";
@@ -45,8 +43,7 @@ class UserServices{
     @ManyToOne(() => Categories, categories => categories.services)
     category: Categories;
 
-    @OneToOne(() => Location)
-    @JoinColumn()
+    @ManyToOne( () => Location, location => location.services)
     location: Location;
 };
 
