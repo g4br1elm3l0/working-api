@@ -4,7 +4,7 @@ import Users from "../../Entities/users.entity";
 const listWorkersService = async () => {
     const workersRepo = dataSource.getRepository(Users)
 
-    const workers = await workersRepo.find({
+    const workers = await workersRepo.findBy({
         isWorker: true
     })
 
