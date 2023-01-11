@@ -1,6 +1,6 @@
 import { IUserRequest } from "../../../Interfaces/Users";
 
-export const mockedUserRequest : IUserRequest = {
+export const mockedUser : IUserRequest = {
     name: "leonardo",
     email: "leonardo@mail.com",
     password: "leo1234",

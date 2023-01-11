@@ -2,7 +2,7 @@ import request from "supertest";
 import { DataSource } from "typeorm";
 import dataSource from "../../../data-source";
 import app from "../../../app";
-import { mockedUserRequest } from "../../Mocks/Integration/user.mock";
+import { mockedUser } from "../../Mocks/Integration/user.mock";
 
 describe("/users", () => {
     let connection: DataSource;
@@ -19,7 +19,7 @@ describe("/users", () => {
     });
 
     test("POST /users - Must be able to create user", async () => {
-        const response = await request(app).post(baseUrl).send(mockedUserRequest);
+        const response = await request(app).post(baseUrl).send(mockedUser);
 
         expect(response.body).toHaveProperty("id")
         expect(response.body).toHaveProperty("name")
@@ -45,4 +45,13 @@ describe("/users", () => {
 
         expect(response.status).toBe(201)
     });
+
+    test("POST /users - should not be able to create a user that already exists", async () => {
+        const response = await request(app).post(baseUrl).send(mockedUser);
+
+        expect(response.body).toHaveProperty("message")
+        expect(response.status).toBe(409)
+    });
+
+    
 });
