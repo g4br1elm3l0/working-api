@@ -7,6 +7,7 @@ import {
 import Address from "./addresses.entity";
 import Location from "./locations.entity";
 import UserServices from "./userServices.entity";
+import WorkerServices from "./workerServices.entity";
 
 @Entity("users")
 class Users {
@@ -34,8 +35,11 @@ class Users {
     @Column({ length: 11 })
     telephone: string;
 
-    @Column()
+    @Column({ default: true })
     isActive: boolean;
+
+    @Column()
+    isWorker: boolean;
 
     @CreateDateColumn()
     createdAt: Date;
@@ -53,6 +57,9 @@ class Users {
     @OneToOne(() => Location)
     @JoinColumn()
     location: Location;
+
+    @OneToMany(() => WorkerServices, workerService => workerService.userService)
+    workerService: WorkerServices[];
 
     @OneToMany(() => UserServices, userServices => userServices.user)
     services: UserServices[];
