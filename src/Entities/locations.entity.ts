@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import Users from "./users.entity";
+import UserServices from "./userServices.entity";
 
 @Entity("locations")
 class Location {
@@ -10,6 +12,14 @@ class Location {
 
     @Column()
     latitude: number;
+
+    @OneToOne(() => Users)
+    @JoinColumn()
+    user: Users
+
+    @OneToOne(() => UserServices)
+    @JoinColumn()
+    service: UserServices
 };
 
 export default Location;
