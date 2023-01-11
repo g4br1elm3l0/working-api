@@ -1,45 +1,37 @@
 import { hashSync } from "bcryptjs";
-import { 
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-    UpdateDateColumn,
-    BeforeUpdate,
-    BeforeInsert,
-    DeleteDateColumn,
-    OneToOne,
-    JoinColumn,
-    OneToMany
+import {
+    BeforeInsert, BeforeUpdate, Column,
+    CreateDateColumn, DeleteDateColumn, Entity, JoinColumn,
+    OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn
 } from "typeorm";
 import Address from "./addresses.entity";
 import Location from "./locations.entity";
 import UserServices from "./userServices.entity";
 
 @Entity("users")
-class Users{
+class Users {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({length: 50})
+    @Column({ length: 50 })
     name: string;
 
-    @Column({length: 100, unique: true})
+    @Column({ length: 100, unique: true })
     email: string;
 
     @Column()
     password: string;
 
     @Column()
-    gender: "masculino" | "feminino";
+    gender: string;
 
-    @Column({type: Date})
+    @Column()
     birthday: string;
 
     @Column()
     profileImg: string;
 
-    @Column({length: 11})
+    @Column({ length: 11 })
     telephone: string;
 
     @Column()
@@ -51,7 +43,7 @@ class Users{
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @DeleteDateColumn({nullable: true})
+    @DeleteDateColumn({ nullable: true })
     deletedAt: Date;
 
     @OneToOne(() => Address)
@@ -63,11 +55,11 @@ class Users{
     location: Location;
 
     @OneToMany(() => UserServices, userServices => userServices.user)
-    services: UserServices[]; 
+    services: UserServices[];
 
     @BeforeUpdate()
     @BeforeInsert()
-    hashPassword(){
+    hashPassword() {
         this.password = hashSync(this.password, 10);
     };
 };
