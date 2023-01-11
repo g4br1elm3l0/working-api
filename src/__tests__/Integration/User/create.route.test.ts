@@ -61,5 +61,12 @@ describe("/users", () => {
         expect(response.body)[0].not.toHaveProperty("password");
     });
 
+    test("GET /users - Shoul not be able to list user without authetication", async () => {
+        const response = await request(app).get("/users");
+
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(401);
+    });
+
     
 });
