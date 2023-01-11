@@ -6,7 +6,8 @@ export interface IWorkerRequest {
     password: string
     birthday: string
     gender: string
-    profileImg?: string
+    profileImg: string
+    isWorker: boolean
     telephone: string
 }
 
@@ -16,11 +17,16 @@ export interface IWorkerResponse {
     email: string
     birthday: string
     gender: string
-    profileImg?: string
+    profileImg?: string 
     telephone: string
     createdAt: Date
     updatedAt: Date
     isActive: boolean
+}
+
+export interface IWorkerLogin {
+    email: string
+    password: string
 }
 
 export interface IWorkerUpdate {
