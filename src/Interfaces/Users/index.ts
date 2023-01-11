@@ -14,6 +14,7 @@ export interface IUserResponse {
     name: string
     email: string
     birthday: string
+    isWorker: boolean
     gender: string
     profileImg?: string
     telephone: string
@@ -33,4 +34,5 @@ export interface IUserUpdate {
     password?: string
     telephone?: string
     profileImg?: string
+    gender?: string
 }

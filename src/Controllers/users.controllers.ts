@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { createUserService } from '../Services/Users/createUser.service';
 import listWorkersService from '../Services/Users/listWorker.service';
-import { IUserRequest } from './../Interfaces/Users/index';
+import { IUserRequest, IUserUpdate } from './../Interfaces/Users/index';
 import { listUserService } from './../Services/Users/listUser.service';
+import { pathUserService } from './../Services/Users/pathUser.service';
 
 export const createUserController = async (req: Request, res: Response) => {
     const userData: IUserRequest = req.body
@@ -20,3 +21,10 @@ export const listWorkersController = async (req: Request, res: Response) => {
     return res.status(200).json(users)
 }
 
+
+export const pathUserController = async (req: Request, res: Response) => {
+    const userId: string = req.params.id
+    const userData: IUserUpdate = req.body
+    const updatedUser = await pathUserService(userData, userId)
+    return res.json(updatedUser)
+}
