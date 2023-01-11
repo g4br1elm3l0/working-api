@@ -76,4 +76,15 @@ describe("/users", () => {
        expect(response.body).toHaveProperty("message");
        expect(response.status).toBe(401);
     });
+
+    test("DELETE /users/:id - Must be able to soft delete user", async () => {
+        await request(app).post("/users").send(mockedUser);
+        const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
+        const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+        const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+
+        expect(findUser.body[0].isActive).toBe(false);
+        expect(response.body).toBe(204);
+    });
 });
