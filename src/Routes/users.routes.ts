@@ -1,11 +1,11 @@
 import { Router } from "express";
-import ensureIsValidDataMiddleware from "../Middlewares/ensureIsValidData.middleware";
-import { requestUsersSerializer } from "../Serializers/users.serializers";
-import { createUserController } from './../Controllers/users.controllers';
+import { createUserController, listUserController } from './../Controllers/users.controllers';
 const userRouter = Router()
 
 
-userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController)
+userRouter.post('', createUserController)
+userRouter.get('', listUserController)
+userRouter.patch('',)
 
 
 export default userRouter

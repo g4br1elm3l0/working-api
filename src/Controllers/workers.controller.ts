@@ -1,7 +1,8 @@
-import listWorkersService from "../Services/Workers/listWorker.service";
 import { Request, Response } from "express";
-import { IWorkerRequest } from "../Interfaces/Workers";
+import listWorkersService from "../Services/Workers/listWorker.service";
+
 import createWorkerService from "../Services/Workers/createWorker.service";
+import { IWorkerRequest } from './../Interfaces/Workers/index';
 
 export const listWorkerController = async (req: Request, res: Response) => {
     const workers = await listWorkersService();

@@ -15,7 +15,7 @@ export interface IUserResponse {
     email: string
     birthday: string
     gender: string
-    profileImg?: string 
+    profileImg?: string
     telephone: string
     createdAt: Date
     updatedAt: Date
@@ -32,5 +32,5 @@ export interface IUserUpdate {
     email?: string
     password?: string
     telephone?: string
-    profileImg?: string 
+    profileImg?: string
 }
