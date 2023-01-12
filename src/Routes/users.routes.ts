@@ -6,8 +6,8 @@ import ensureIsValidDataMiddleware from "../Middlewares/ensureIsValidData.middle
 import { ensureIsValidIdMiddleware } from "../Middlewares/ensureIsValidId.middleware";
 import { requestUsersSerializer, updatedUserSerializer } from "../Serializers/users.serializers";
 import { createUserController, deleteUserController, listUsersController, listWorkersController, UpdateUserController } from './../Controllers/users.controllers';
-const userRouter = Router()
 
+const userRouter = Router();
 
 userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController)
 userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware,listUsersController)
