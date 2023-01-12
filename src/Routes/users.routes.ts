@@ -23,7 +23,7 @@ userRouter.delete('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmM
 userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(jobsSerializer), createJobsController)
 userRouter.get('/services', ensureAuthMiddleware, ensureIsWorker, listJobsController)
 userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users))
-userRouter.get('/services/:id', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices))
+userRouter.get('/services/:servicesId', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices))
 userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware)
 userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware)
 
