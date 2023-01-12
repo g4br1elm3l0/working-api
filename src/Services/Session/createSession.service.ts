@@ -13,14 +13,15 @@ const createSessionService = async ( { email, password }: IUserLogin ) => {
     const searchUser = await userRepository.findOneBy({
         email: email
     });
+    
     if(!searchUser){
-       throw new AppError("Invalid user or password!", 403);
+        throw new AppError("Invalid user or password!", 403);
     };
-
+    
     if (!searchUser.isActive){
         throw new AppError("User is not active");
     };
-
+    
     const passwordMatch = await compare(String(password), searchUser.password);
     if(!passwordMatch){
         throw new AppError("Invalid user or password!", 403);

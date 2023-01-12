@@ -40,6 +40,7 @@ describe("/login", () => {
     test("POST /login - Should not be able to login with the user with isActive = false", async () => {
         const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
+        
         await request(app).delete(`/users/${findUser.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`);
         const response = await request(app).post("/login").send(mockedUserAdmLogin);
 
