@@ -2,7 +2,7 @@ import request from "supertest";
 import { DataSource } from "typeorm";
 import dataSource from "../../../data-source";
 import app from "../../../app";
-import { mockedUser, mockedUserLogin, mockedUserWorker } from "../../Mocks/Integration/user.mock";
+import { mockedUser, mockedUserAdm, mockedUserAdmLogin, mockedUserLogin, mockedUserWorker } from "../../Mocks/Integration/user.mock";
 
 describe("/users", () => {
     let connection: DataSource;
@@ -30,6 +30,7 @@ describe("/users", () => {
         expect(response.body).toHaveProperty("telephone");
         expect(response.body).toHaveProperty("isActive");
         expect(response.body).toHaveProperty("isWorker");
+        expect(response.body).toHaveProperty("isAdm");
         expect(response.body).toHaveProperty("createdAt");
         expect(response.body).toHaveProperty("updatedAt");
         
@@ -40,6 +41,7 @@ describe("/users", () => {
         expect(response.body.profileImg).toEqual("profileleo");
         expect(response.body.telephone).toEqual("67999956325");
         expect(response.body.isActive).toEqual(true);
+        expect(response.body.isWorker).toEqual(false);
         expect(response.body.isWorker).toEqual(false);
 
         expect(response.status).toBe(201);
@@ -52,14 +54,13 @@ describe("/users", () => {
         expect(response.status).toBe(409);
     });
 
-    test("GET /users - Must be able to list users", async () => {
-        await request(app).post("/users").send(mockedUserWorker);
-        
-        const userWorkerLoginResponse = await request(app).post("/login").send(mockedUserWorker);
-        const response = await request(app).get("/users").set("Authorization", `Bearer ${userWorkerLoginResponse.body.token}`);
+    test("GET /users - Should not be able to list users if not admin.", async () => {
+        await request(app).post("/users").send(mockedUser);
+        const loginResponse = await request(app).post("/login").send(mockedUserLogin);
+        const response = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
 
-        expect(response.body).toHaveLength(2);
-        expect(response.body)[0].not.toHaveProperty("password");
+        expect(response.body).toHaveProperty("message");
+        expect(response.body).toBe(403);
     });
 
     test("GET /users - Shoul not be able to list user without authetication", async () => {
@@ -70,8 +71,8 @@ describe("/users", () => {
     });
 
     test("DELETE /users/:id - Should not be able to delete user without authentication", async () => {
-       const userResponse = await request(app).post("/login").send(mockedUserLogin);
-       const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${userResponse.body.token}`);
+       const loginResponse = await request(app).post("/login").send(mockedUserLogin);
+       const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
        const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`);
 
        expect(response.body).toHaveProperty("message");
@@ -80,10 +81,10 @@ describe("/users", () => {
 
     test("DELETE /users/:id - Must be able to soft delete user", async () => {
         await request(app).post("/users").send(mockedUser);
-        const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
-        const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${userLoginResponse.body.token}`);
-        const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`);
-        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+        const loginResponse = await request(app).post("/login").send(mockedUserLogin);
+        const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
+        const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`);
+        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
 
         expect(findUser.body[0].isActive).toBe(false);
         expect(response.body).toBe(204);

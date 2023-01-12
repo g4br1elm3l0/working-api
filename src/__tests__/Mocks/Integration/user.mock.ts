@@ -11,6 +11,18 @@ export const mockedUser : IUserRequest = {
     isWorker: false
 };
 
+export const mockedUserAdm : IUserRequest = {
+    name: "leonardo adm",
+    email: "leonardoadm@mail.com.br",
+    password: "leo1234",
+    gender: "masculino",
+    birthday: "04/10/98",
+    profileImg: "profileleo",
+    telephone: "67998756325",
+    isWorker: false,
+    isAdm: true
+};
+
 export const mockedUserWorker : IUserRequest = {
     name: "Leonardo 123",
     email: "leonardo.123@mail.com",
@@ -24,6 +36,11 @@ export const mockedUserWorker : IUserRequest = {
 
 export const mockedUserLogin : IUserLogin = {
     email: "leonardo@mail.com",
+    password: "leo1234"
+};
+
+export const mockedUserAdmLogin : IUserLogin = {
+    email: "leonardoadm@mail.com.br",
     password: "leo1234"
 };
 
