@@ -37,6 +37,9 @@ class Users {
     @Column()
     isWorker: boolean;
 
+    @Column({default:false})
+    isAdm: boolean;
+
     @CreateDateColumn()
     createdAt: Date;
 
