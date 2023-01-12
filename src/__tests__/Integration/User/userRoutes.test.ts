@@ -108,4 +108,14 @@ describe("/users", () => {
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(403);
     });
+
+    test("DELETE /users/:id - Shouldn-t be able to delete user with isActive = false", async () => {
+        await request(app).post("/users").send(mockedUserAdm);
+        const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        const userToBeDeleted = await await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
+        const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`);
+
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(400);
+    });
 });
