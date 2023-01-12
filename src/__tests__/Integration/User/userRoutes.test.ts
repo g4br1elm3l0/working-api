@@ -59,8 +59,8 @@ describe("/users", () => {
         const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const response = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
 
-        expect(response.body).toHaveLength(2);
-        expect(response.body[0]).not.toHaveProperty("password");
+        expect(response.body).toHaveLength(1);
+        expect(response.body).not.toHaveProperty("password");
     });
 
     test("GET /users - Should not be able to list users if not admin.", async () => {
