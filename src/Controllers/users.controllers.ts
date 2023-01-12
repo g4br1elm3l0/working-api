@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { createUserService } from '../Services/Users/createUser.service';
+import deleteUserService from '../Services/Users/deleteUser.service';
 import listWorkersService from '../Services/Users/listWorker.service';
 import { updateUserService } from '../Services/Users/uptadeUser.service';
 import { IUserRequest, IUserUpdate } from './../Interfaces/Users/index';
@@ -30,4 +31,9 @@ export const UpdateUserController = async (req: Request, res: Response) => {
     return res.json(updatedUser)
 }
 
+export const deleteUserController = async (req: Request, res: Response) => {
+
+    await deleteUserService(req.params.id)
+    return res.status(204).json({})
+}
 

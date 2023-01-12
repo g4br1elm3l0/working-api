@@ -5,7 +5,7 @@ import ensureIsAdmMiddleware from "../Middlewares/ensureIsAdm.middleware";
 import ensureIsValidDataMiddleware from "../Middlewares/ensureIsValidData.middleware";
 import { ensureIsValidIdMiddleware } from "../Middlewares/ensureIsValidId.middleware";
 import { requestUsersSerializer, updatedUserSerializer } from "../Serializers/users.serializers";
-import { createUserController, listUsersController, listWorkersController, UpdateUserController } from './../Controllers/users.controllers';
+import { createUserController, deleteUserController, listUsersController, listWorkersController, UpdateUserController } from './../Controllers/users.controllers';
 const userRouter = Router()
 
 
@@ -14,6 +14,6 @@ userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware,listUsersControll
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware,listWorkersController)
 userRouter.get('/:id', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), )
 userRouter.patch('/:id', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController)
-
+userRouter.delete('/:id', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteUserController)
 
 export default userRouter
