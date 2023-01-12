@@ -23,8 +23,8 @@ export const listWorkersController = async (req: Request, res: Response) => {
 
 
 export const pathUserController = async (req: Request, res: Response) => {
-    const userId: string = req.params.id
+    const userParamsId: string = req.params.id
     const userData: IUserUpdate = req.body
-    const updatedUser = await pathUserService(userData, userId)
+    const updatedUser = await pathUserService(userData, userParamsId, req.user)
     return res.json(updatedUser)
 }

@@ -1,15 +1,21 @@
 import { hashSync } from 'bcryptjs';
 import dataSource from "../../data-source";
+import { IReqUser } from '../../Interfaces/Session';
 import { IUserResponse, IUserUpdate } from "../../Interfaces/Users";
 import { responseUsersSerializer } from "../../Serializers/users.serializers";
 import Users from './../../Entities/users.entity';
 import AppError from './../../errors';
 
-export const pathUserService = async (userData: IUserUpdate, userId: string): Promise<IUserResponse> => {
+export const pathUserService = async (userData: IUserUpdate, userParamsId: string, user: IReqUser): Promise<IUserResponse> => {
     const userRepo = dataSource.getRepository(Users);
-    const searchUserByEmail = await userRepo.findOneBy({ email: userData.email });
+    
+
+    if (!user.isAdm && user.id !== userParamsId){
+        throw new AppError("Missing Admin permissions", 403);
+    }
 
     if (userData.email) {
+        const searchUserByEmail = await userRepo.findOneBy({ email: userData.email });
         if (searchUserByEmail) {
             throw new AppError("Email already exists", 409);
         };
@@ -27,7 +33,7 @@ export const pathUserService = async (userData: IUserUpdate, userId: string): Pr
 
 
     const findUser = await userRepo.findOneBy({
-        id: userId
+        id: userParamsId
     })
 
     if (userData.password) {
@@ -40,7 +46,7 @@ export const pathUserService = async (userData: IUserUpdate, userId: string): Pr
     }
 
 
-    await userRepo.update({ id: userId }, updatedUser)
+    await userRepo.update({ id: userParamsId }, updatedUser)
     const updatedUserWithoutPassword = await responseUsersSerializer.validate(updatedUser, {
         stripUnknown: true
     })

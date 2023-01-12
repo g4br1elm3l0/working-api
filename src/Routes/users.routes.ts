@@ -11,7 +11,7 @@ const userRouter = Router()
 userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController)
 userRouter.get('', listUsersController)
 userRouter.get('/workers', listWorkersController)
-userRouter.get('/:id', ensureIsValidUserIdMiddleware)
+userRouter.get('/:id', ensureAuthMiddleware, ensureIsValidUserIdMiddleware(Users), )
 userRouter.patch('/:id', ensureAuthMiddleware, ensureIsValidUserIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), pathUserController)
 
 
