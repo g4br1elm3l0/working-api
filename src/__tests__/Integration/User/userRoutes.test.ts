@@ -118,4 +118,13 @@ describe("/users", () => {
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(400);
     });
+
+    test("DELTE /users/:id - Should not be able to delete user with invelid id", async () => {
+        await request(app).post("/users").send(mockedUserAdm);
+        const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        const response = await request(app).delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization", `Bearer ${loginResponse.body.token}`);
+
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(404);
+    });
 });
