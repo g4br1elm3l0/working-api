@@ -3,7 +3,7 @@ import { createUserService } from '../Services/Users/createUser.service';
 import listWorkersService from '../Services/Users/listWorker.service';
 import { IUserRequest, IUserUpdate } from './../Interfaces/Users/index';
 import { listUserService } from './../Services/Users/listUser.service';
-import { pathUserService } from './../Services/Users/pathUser.service';
+import { updateUserService } from '../Services/Users/uptadeUser.service';
 
 export const createUserController = async (req: Request, res: Response) => {
     const userData: IUserRequest = req.body
@@ -22,9 +22,9 @@ export const listWorkersController = async (req: Request, res: Response) => {
 }
 
 
-export const pathUserController = async (req: Request, res: Response) => {
+export const updateUserController = async (req: Request, res: Response) => {
     const userParamsId: string = req.params.id
     const userData: IUserUpdate = req.body
-    const updatedUser = await pathUserService(userData, userParamsId, req.user)
+    const updatedUser = await updateUserService(userData, userParamsId, req.user)
     return res.json(updatedUser)
 }

@@ -3,16 +3,11 @@ import dataSource from "../../data-source";
 import { IReqUser } from '../../Interfaces/Session';
 import { IUserResponse, IUserUpdate } from "../../Interfaces/Users";
 import { responseUsersSerializer } from "../../Serializers/users.serializers";
-import Users from './../../Entities/users.entity';
-import AppError from './../../errors';
+import Users from '../../Entities/users.entity';
+import AppError from '../../errors';
 
-export const pathUserService = async (userData: IUserUpdate, userParamsId: string, user: IReqUser): Promise<IUserResponse> => {
+export const updateUserService = async (userData: IUserUpdate, userParamsId: string, user: IReqUser): Promise<IUserResponse> => {
     const userRepo = dataSource.getRepository(Users);
-    
-
-    if (!user.isAdm && user.id !== userParamsId){
-        throw new AppError("Missing Admin permissions", 403);
-    }
 
     if (userData.email) {
         const searchUserByEmail = await userRepo.findOneBy({ email: userData.email });
