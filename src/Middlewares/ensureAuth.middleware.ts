@@ -18,7 +18,8 @@ const ensureAuthMiddleware = (req: Request, res: Response, next:NextFunction) =>
         req.user = {
             id: decoded.sub,
             isWorker: decoded.isWorker,
-            isActive: decoded.isActive
+            isActive: decoded.isActive,
+            isAdm:    decoded.isAdm
         }
         return next();
     });

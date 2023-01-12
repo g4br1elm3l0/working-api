@@ -8,12 +8,13 @@ export const responseUsersSerializer: SchemaOf<IUserResponse> = yup.object().sha
     email: yup.string().email().required(),
     birthday: yup.string().required(),
     gender: yup.string().required(),
-    profileImg: yup.string().notRequired(),
+    profileImg: yup.string().required(),
     telephone: yup.string().required(),
     isWorker: yup.boolean().required(),
     createdAt: yup.date().required(),
     updatedAt: yup.date().required(),
-    isActive: yup.boolean().required()
+    isActive: yup.boolean().required(),
+    isAdm: yup.boolean().required()
 })
 
 export const requestUsersSerializer: SchemaOf<IUserRequest> = yup.object().shape({
@@ -24,7 +25,8 @@ export const requestUsersSerializer: SchemaOf<IUserRequest> = yup.object().shape
     gender: yup.string().required(),
     profileImg: yup.string().notRequired(),
     telephone: yup.string().required(),
-    isWorker: yup.boolean().required()
+    isWorker: yup.boolean().required(),
+    isAdm: yup.boolean().notRequired()
 })
 
 export const usersWithoutPasswordSerializer: SchemaOf<IUserResponse[]> = yup.array(responseUsersSerializer);

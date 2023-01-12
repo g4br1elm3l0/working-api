@@ -7,6 +7,7 @@ declare global {
                 id: string
                 isWorker: boolean
                 isActive: boolean
+                isAdm: boolean
             }
         }
     }

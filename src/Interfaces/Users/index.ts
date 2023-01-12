@@ -6,6 +6,7 @@ export interface IUserRequest {
     gender: string
     profileImg: string
     isWorker: boolean
+    isAdm?: boolean
     telephone: string
 }
 
@@ -16,6 +17,7 @@ export interface IUserResponse {
     birthday: string
     isWorker: boolean
     gender: string
+    isAdm?: boolean
     profileImg?: string
     telephone: string
     createdAt: Date
