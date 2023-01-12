@@ -25,12 +25,12 @@ export const listWorkersController = async (req: Request, res: Response) => {
 }
 
 export const listAnUserController = async (req: Request, res: Response) => {
-    const users = await listAnUserService(req.params.id)
+    const users = await listAnUserService(req.params.userId)
     return res.status(200).json(users)
 }
 
 export const UpdateUserController = async (req: Request, res: Response) => {
-    const userParamsId: string = req.params.id
+    const userParamsId: string = req.params.userId
     const userData: IUserUpdate = req.body
     const updatedUser = await updateUserService(userData, userParamsId, req.user)
     return res.json(updatedUser)
@@ -38,7 +38,7 @@ export const UpdateUserController = async (req: Request, res: Response) => {
 
 export const deleteUserController = async (req: Request, res: Response) => {
 
-    await deleteUserService(req.params.id)
+    await deleteUserService(req.params.userId)
     return res.status(204).json({})
 }
 
