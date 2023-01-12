@@ -53,6 +53,15 @@ describe("/users", () => {
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(409);
     });
+    
+    test("GET /users - Must be able to list users", async () => {
+        await request(app).post("/users").send(mockedUserAdm);
+        const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        const response = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
+
+        expect(response.body).toHaveLength(2);
+        expect(response.body[0]).not.toHaveProperty("password");
+    });
 
     test("GET /users - Should not be able to list users if not admin.", async () => {
         await request(app).post("/users").send(mockedUser);
