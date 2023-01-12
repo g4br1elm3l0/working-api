@@ -5,7 +5,7 @@ import AppError from "../errors";
 
 
 
-export const ensureIsValidUserIdMiddleware = (entity: EntityTarget<ObjectLiteral>) => async (req: Request, res: Response, next: NextFunction) => {
+export const ensureIsValidIdMiddleware = (entity: EntityTarget<ObjectLiteral>) => async (req: Request, res: Response, next: NextFunction) => {
     
     const repo = dataSource.getRepository(entity);
     const searchDataOnRepo = await repo.findOneBy({id: req.params.id});

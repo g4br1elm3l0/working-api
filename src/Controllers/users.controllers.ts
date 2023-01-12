@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { createUserService } from '../Services/Users/createUser.service';
 import listWorkersService from '../Services/Users/listWorker.service';
+import { updateUserService } from '../Services/Users/uptadeUser.service';
 import { IUserRequest, IUserUpdate } from './../Interfaces/Users/index';
 import { listUserService } from './../Services/Users/listUser.service';
-import { updateUserService } from '../Services/Users/uptadeUser.service';
+
 
 export const createUserController = async (req: Request, res: Response) => {
     const userData: IUserRequest = req.body
@@ -22,9 +23,11 @@ export const listWorkersController = async (req: Request, res: Response) => {
 }
 
 
-export const updateUserController = async (req: Request, res: Response) => {
+export const UpdateUserController = async (req: Request, res: Response) => {
     const userParamsId: string = req.params.id
     const userData: IUserUpdate = req.body
     const updatedUser = await updateUserService(userData, userParamsId, req.user)
     return res.json(updatedUser)
 }
+
+
