@@ -21,7 +21,7 @@ class UserServices {
     femaleOnly: boolean;
 
     @Column({ default: "pendente" })
-    status: "pendente" | "aceito" | "resolvido" | "removido";
+    status: string;
 
     @CreateDateColumn()
     createdAt: Date;
