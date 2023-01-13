@@ -13,13 +13,17 @@ import { mockedUser, mockedUserLogin, mockedUserWorker, mockedUserWorkerLogin } 
     GET users/services
     [v] - It should be able to list all services
     [v] - It should not be able to list services without authentication
-    [v] - Should not be able to list services if isWorker = false
+    [v] - You shouldn't be able to list a service if you're not an admin or worker.
     GET users/services/:servicesId
-    [x] - Must be able to list a service
-    [x] - Must not be able to list a service without authentication
+    [v] - Must be able to list a service
+    [v] - Must not be able to list a service without authentication
+    [v] - You shouldn't be able to list a service if you're not an admin or worker.
+    [v] - Should not be able to list a service with invalid id
     GET users/:userId/services
     [x] - It should be possible to list all services for a single user
     [x] - Must not be able to list a user's services without authentication
+    [v] - You shouldn't be able to list a service if you're not an administrator or owner.
+    [x] - Should not be able to list a service with invalid id
     PATCH users/:userId/services/:servicesId
     [x] - It must be possible to update a service
     [x] - Must not be able to update a service without authentication
@@ -107,7 +111,7 @@ describe("/services", () => {
         expect(response.status).toBe(401);
     });
 
-    test("POST /users/services - Should not be able to create a service with isWorker = true", async () => {
+    test("POST /users/services - You shouldn't be able to list a service if you're not an admin or worker.", async () => {
         await request(app).post("/users").send(mockedUserWorker);
         const loginRespone = await request(app).post("/login").send(mockedUserWorkerLogin);
         const response = await request(app).post("/users/services").send(mockedService2).set("Authorization", `Bearer ${loginRespone.body.token}`);
@@ -118,11 +122,11 @@ describe("/services", () => {
 
     test("GET /users/services - It should be able to list all services", async () => {
         await request(app).post("/users").send(mockedUserWorker);
-        const loginRespone = await request(app).post("/login").send(mockedUserWorker);
+        const loginRespone = await request(app).post("/login").send(mockedUserWorkerLogin);
         const response = await request(app).get("/users/services").set("Authorization", `Bearer ${loginRespone.body.token}`);
 
         expect(response.body).toHaveLength(2);
-        expect(response.body.user).not.toHaveProperty("password");
+        expect(response.body[0].user).not.toHaveProperty("password");
     });
     
     test("GET /users/services - It should not be able to list services without authentication", async () => {
@@ -141,5 +145,69 @@ describe("/services", () => {
     
         expect(response.body).toHaveProperty("message");
         expect(response.body).toBe(403);
+    });
+
+    test("GET users/services/:servicesId - Must be able to list a service", async () => {
+        await request(app).post("/users").send(mockedUserWorker);
+        const loginRespone = await request(app).post("/login").send(mockedUserWorkerLogin);
+        const service = await request(app).post("/users/services").send(mockedService2).set("Authorization", `Bearer ${loginRespone.body.token}`);
+        
+        const response = await request(app).get(`/users/services/${service.body.id}`).set("Authorization", `Bearer ${loginRespone.body.token}`);
+
+        expect(response.body).toHaveLength(1);
+        expect(response.body.user).not.toHaveProperty("password");
+    });
+
+    test("GET users/services/:servicesId - Must not be able to list a service without authentication", async () => {
+        await request(app).post("/users").send(mockedUserWorker);
+        const loginRespone = await request(app).post("/login").send(mockedUserWorkerLogin);
+        const service = await request(app).post("/users/services").send(mockedService2).set("Authorization", `Bearer ${loginRespone.body.token}`);
+
+        const response = await request(app).get(`/users/services/${service.body.id}`);
+
+        expect(response.body).toHaveProperty("message");
+        expect(response.body).toBe(401);
+    });
+
+    test("GET users/services/:servicesId - Must not be able to list a service if isWorker = false", async () => {
+        await request(app).post("/users").send(mockedUser);
+        const loginRespone = await request(app).post("/login").send(mockedUserLogin);
+        const service = await request(app).post("/users/services").send(mockedService2).set("Authorization", `Bearer ${loginRespone.body.token}`);
+
+        const response = await request(app).get(`/users/services/${service.body.id}`).set("Authorization", `Bearer ${loginRespone.body.token}`);
+        
+        expect(response.body).toHaveProperty("message");
+        expect(response.body).toBe(403);
+    });
+
+    test("GET users/services/:servicesId - Should not be able to list a service with invalid id", async () => {
+        await request(app).post("/users").send(mockedUserWorker);
+        const loginRespone = await request(app).post("/login").send(mockedUserWorkerLogin);
+        
+        const response = await request(app).get("/users/services/13970660-5dbe-423a-9a9d-5c23b37943cf").set("Authorization", `Bearer ${loginRespone.body.token}`);
+
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(404);
+    });
+
+    test("GET users/services/:servicesId - Should not be able to list a service with invalid id", async () => {
+        await request(app).post("/users").send(mockedUserWorker);
+        const loginRespone = await request(app).post("/login").send(mockedUserWorkerLogin);
+        
+        const response = await request(app).get("/users/services/").set("Authorization", `Bearer ${loginRespone.body.token}`);
+
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(404);
+    });
+
+    test("GET users/:userId/services - It should be possible to list all services for a single user", async () => {
+        const user = await request(app).post("/users").send(mockedUserWorker);
+        const loginRespone = await request(app).post("/login").send(mockedUserWorkerLogin);
+        await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginRespone.body.token}`);
+        await request(app).post("/users/services").send(mockedService2).set("Authorization", `Bearer ${loginRespone.body.token}`);
+        const response = await request(app).get(`/users/${user.body.id}/services`).set("Authorization", `Bearer ${loginRespone.body.token}`);
+
+        expect(response.body).toHaveLength(2);
+        expect(response.body.user).not.toHaveProperty("password");
     });
 });
