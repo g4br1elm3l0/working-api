@@ -10,7 +10,7 @@ export const createUserServiceService = async (serviceData: IUserServiceRequest,
     const userServicesRepository = dataSource.getRepository(UserServices);
     const userRepository = dataSource.getRepository(Users);
 
-    const {category:categoryName, ...data} = serviceData;
+    const {category, ...data} = serviceData;
 
     const searchUser = await userRepository.findOneBy({id: userId});
     if (!searchUser){
@@ -18,11 +18,12 @@ export const createUserServiceService = async (serviceData: IUserServiceRequest,
     }
 
     const categoriesRepository = dataSource.getRepository(Categories);
-    let searchCategory = await categoriesRepository.findOneBy({name: categoryName.toLowerCase()});
+    let searchCategory = await categoriesRepository.findOneBy({name: category.toLowerCase()});
     if (!searchCategory){
-        const category = categoriesRepository.create({name: categoryName});
-        searchCategory = await categoriesRepository.save(category);
+        const newCategory = categoriesRepository.create({name: category.toLowerCase()});
+        searchCategory = await categoriesRepository.save(newCategory);
     }
+
     const userService = userServicesRepository.create({
         ...data,
     });
