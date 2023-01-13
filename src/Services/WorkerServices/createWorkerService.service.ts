@@ -2,9 +2,8 @@ import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
 import WorkerServices from "../../Entities/workerServices.entity";
 import AppError from "../../errors";
-import { IUserResponse } from "../../Interfaces/Users";
 import { IWorkerServiceRequest } from "../../Interfaces/WorkerServices";
-import { usersWithoutPasswordSerializer } from "../../Serializers/users.serializers";
+import { responseUsersSerializer } from "../../Serializers/users.serializers";
 import Users from './../../Entities/users.entity';
 
 export const createWorkerService = async (userData: IWorkerServiceRequest) => {
@@ -26,14 +25,18 @@ export const createWorkerService = async (userData: IWorkerServiceRequest) => {
     };
 
     const workerService = workerServiceRepository.create(userData);
+
+    
     workerService.user = searchUser;
     workerService.userService = searchUserService;
 
-    workerServiceRepository.save(workerService)
-    
-    // const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerServicesList, {
-    //     stripUnknown: true
-    // });
+    const createdWorkerService = await workerServiceRepository.save(workerService)
 
-    return workerService;
+    
+    const {password, ...userWithoutPassword} = createdWorkerService.user
+    console.log(createdWorkerService)
+    return {
+        ...createdWorkerService,
+        worker: userWithoutPassword
+    };
 }
