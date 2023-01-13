@@ -5,12 +5,12 @@ import Users from '../../Entities/users.entity';
 import Categories from '../../Entities/categories.entity';
 import AppError from '../../errors';
 
-export const createUserServiceService = async (serviceData: IUserServiceRequest): Promise<IUserService> => {
+export const createUserServiceService = async (serviceData: IUserServiceRequest, userId: string): Promise<IUserService> => {
 
     const userServicesRepository = dataSource.getRepository(UserServices);
     const userRepository = dataSource.getRepository(Users);
 
-    const {userId, category:categoryName, ...data} = serviceData;
+    const {category:categoryName, ...data} = serviceData;
 
     const searchUser = await userRepository.findOneBy({id: userId});
     if (!searchUser){
@@ -18,17 +18,23 @@ export const createUserServiceService = async (serviceData: IUserServiceRequest)
     }
 
     const categoriesRepository = dataSource.getRepository(Categories);
-    const searchCategory = await categoriesRepository.findOneBy({name: categoryName});
+    let searchCategory = await categoriesRepository.findOneBy({name: categoryName.toLowerCase()});
     if (!searchCategory){
         const category = categoriesRepository.create({name: categoryName});
-        const createdCategory = await userServicesRepository.save(category);
+        searchCategory = await categoriesRepository.save(category);
     }
-
-    const userService = userServicesRepository.create(serviceData);
+    const userService = userServicesRepository.create({
+        ...data,
+    });
+    userService.category = searchCategory;
+    userService.user = searchUser;
     
-    await userServicesRepository.save(userService)
+    const CreatedUserService = await userServicesRepository.save(userService);
 
-    
+    const {password, ...userWithoutPassword} = CreatedUserService.user
 
-    return userService;
+    return {
+        ...CreatedUserService,
+        user: userWithoutPassword
+    };
 } 

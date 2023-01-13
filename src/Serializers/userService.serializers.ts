@@ -6,8 +6,7 @@ export const userServiceSerializer: SchemaOf<IUserServiceRequest> = yup.object()
     title: yup.string().max(50).required(),
     description: yup.string().max(300).required(),
     femaleOnly: yup.boolean().notRequired(),
-    category: yup.string().required(),
-    userId: yup.string().required()
+    category: yup.string().required()
 });
 
 
