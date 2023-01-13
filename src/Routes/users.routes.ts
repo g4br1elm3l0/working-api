@@ -19,10 +19,10 @@ userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(u
 
 userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listUsersController) // listar todos os usuários não trabalhadores (apenas administradores)
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersController) // listar todos os trabalhadores (apenas administradores)
-userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ) // listar um usuário específco (apenas administradores/dono)
 userRouter.get('/services', ensureAuthMiddleware, ensureIsWorker, listAllUserServicesController) // listar todos os serviços de todos os usuários
 userRouter.get('/services/:servicesId', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices)) // listar um serviço específico
-userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), UserServicesbyUserIdController) // listar todos os serviços de um usuário (apenas administradores/dono)
+userRouter.get('/teste/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), UserServicesbyUserIdController) // listar todos os serviços de um usuário (apenas administradores/dono)
+userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users)) // listar um usuário específco (apenas administradores/dono)
 
 userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController) // atualizar um usuário específico (apenas administradores/dono)
 userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware) // atualizar um serviço de um usuário específico (apenas administradores/dono)
