@@ -8,7 +8,6 @@ export interface IUserServiceRequest  {
     category: string;
 }
 
-
 export interface IUserService { 
     id: string;
     title: string;
