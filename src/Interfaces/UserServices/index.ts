@@ -1,11 +1,13 @@
-export interface IJobRequest  { 
+export interface IUserServiceRequest  { 
 title: string;
 description: string;
-femaleOnly: boolean;
+femaleOnly?: boolean;
+userId: string;
+category: string;
 }
 
 
-export interface IJob { 
+export interface IUserService { 
     id: string;
     title: string;
     description: string;
@@ -13,5 +15,4 @@ export interface IJob {
     status: string;
     createdAt: Date;
     updatedAt: Date;
-    
-    }
+}

@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import Users from "../Entities/users.entity";
-import { IJobRequest } from "../Interfaces/Jobs";
-import { createJobService } from "../Services/Jobs/createJobsUsers.service";
-import { listJobsService } from "../Services/Jobs/listJobsUsers.service";
+import { IUserService } from "../Interfaces/UserServices";
+import { createUserServiceService } from "../Services/UserServices/createUserService.service";
+import { listJobsService } from "../Services/UserServices/listJobsUsers.service";
 
 export const createJobsController =async (req: Request, res: Response) => {
-    const userData: IJobRequest = req.body
-    const newJob = await createJobService(userData)
+    const userData: IUserService = req.body
+    const newJob = await createUserServiceService(userData)
     return res.status(201).json(newJob)
 }
 

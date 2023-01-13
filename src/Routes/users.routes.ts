@@ -8,7 +8,7 @@ import ensureIsValidDataMiddleware from "../Middlewares/ensureIsValidData.middle
 import { ensureIsValidIdMiddleware } from "../Middlewares/ensureIsValidId.middleware";
 import { requestUsersSerializer, updatedUserSerializer } from "../Serializers/users.serializers";
 import { createUserController, deleteUserController, listUsersController, listWorkersController, UpdateUserController } from './../Controllers/users.controllers';
-import { jobsSerializer } from "../Serializers/jobs.serializers";
+import { userServiceSerializer } from "../Serializers/userService.serializers";
 import ensureIsWorker from "../Middlewares/ensureIsWorker.middleware";
 import UserServices from "../Entities/userServices.entity";
 
@@ -20,7 +20,7 @@ userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware,listWorke
 userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), )
 userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController)
 userRouter.delete('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteUserController)
-userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(jobsSerializer), createJobsController)
+userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(userServiceSerializer), createJobsController)
 userRouter.get('/services', ensureAuthMiddleware, ensureIsWorker, listJobsController)
 userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users))
 userRouter.get('/services/:id', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices))
