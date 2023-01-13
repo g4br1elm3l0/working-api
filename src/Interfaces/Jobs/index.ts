@@ -1,9 +1,8 @@
-export interface IJobRequest  { 
-title: string;
-description: string;
-femaleOnly: boolean;
+export interface IJobRequest { 
+    title: string;
+    description: string;
+    femaleOnly: boolean;
 }
-
 
 export interface IJob { 
     id: string;
@@ -13,5 +12,4 @@ export interface IJob {
     status: string;
     createdAt: Date;
     updatedAt: Date;
-    
-    }
+}
