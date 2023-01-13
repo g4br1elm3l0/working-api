@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import Users from "../Entities/users.entity";
 import { IJobRequest } from "../Interfaces/Jobs";
 import { createJobService } from "../Services/Jobs/createJobsUsers.service";
-import { listJobsService } from "../Services/Jobs/listJobsUsers.service";
+import { listAllJobsService } from "../Services/Jobs/listAllJobs.service";
+import { listJobsOfUserService } from "../Services/Jobs/listJobsUsers.service";
 
 export const createJobsController =async (req: Request, res: Response) => {
     const userData: IJobRequest = req.body
@@ -10,8 +10,13 @@ export const createJobsController =async (req: Request, res: Response) => {
     return res.status(201).json(newJob)
 }
 
-export const listJobsController = async (req: Request, res: Response) => {
-    const userId: any = req.params.id
-    const jobs = await listJobsService(userId)
+export const listJobsOfUserController = async (req: Request, res: Response) => {
+    const userId: string = req.params.userId
+    const jobs = await listJobsOfUserService(userId)
+    return res.status(200).json(jobs)
+}
+
+export const listAllJobsController = async (req: Request, res: Response) => {
+    const jobs = await listAllJobsService()
     return res.status(200).json(jobs)
 }
