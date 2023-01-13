@@ -3,7 +3,6 @@ import dataSource from "../../../data-source";
 import request from "supertest";
 import app from "../../../app";
 import { mockedUserAdm, mockedUserAdmLogin } from "../../Mocks/Integration/user.mock";
-import { response } from "express";
 
 describe("/login", () => {
     let connection: DataSource;
