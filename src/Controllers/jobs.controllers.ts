@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { IJobRequest } from "../Interfaces/Jobs";
 import { createJobService } from "../Services/Jobs/createJobsUsers.service";
+import deleteJobsService from "../Services/Jobs/deleteJobs.service";
 import { listAllJobsService } from "../Services/Jobs/listAllJobs.service";
 import { listJobsOfUserService } from "../Services/Jobs/listJobsUsers.service";
 
@@ -19,4 +20,10 @@ export const listJobsOfUserController = async (req: Request, res: Response) => {
 export const listAllJobsController = async (req: Request, res: Response) => {
     const jobs = await listAllJobsService()
     return res.status(200).json(jobs)
+}
+
+export const deleteJobsController = async (req: Request, res: Response) => {
+    await deleteJobsService(req.params.id)
+
+    return res.status(204).json({})
 }
