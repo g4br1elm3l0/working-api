@@ -4,8 +4,9 @@ import deleteUserService from '../Services/Users/deleteUser.service';
 import { listAnUserService } from '../Services/Users/listAnUser.service';
 import listWorkersService from '../Services/Users/listWorker.service';
 import { updateUserService } from '../Services/Users/uptadeUser.service';
-import { IUserRequest, IUserUpdate } from './../Interfaces/Users/index';
+import { IUserRequest, IUserResponse, IUserUpdate } from './../Interfaces/Users/index';
 import { listUserService } from './../Services/Users/listUser.service';
+import { listUserByIdService } from '../Services/Users/listUserByIdService.service'
 
 
 export const createUserController = async (req: Request, res: Response) => {
@@ -42,3 +43,9 @@ export const deleteUserController = async (req: Request, res: Response) => {
     return res.status(204).json({})
 }
 
+
+export const listUserByIdController = async (req: Request, res: Response) => {
+    const userId: any = req.params.userId
+    const user = await listUserByIdService(userId)
+    return res.status(200).json(user)
+}
