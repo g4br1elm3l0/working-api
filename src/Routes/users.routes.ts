@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUserServiceController, listAllUserServicesController, UserServicesbyUserIdController } from "../Controllers/jobs.controllers";
+import { createUserServiceController, listAllUserServicesController, UserServicesbyUserIdController } from "../Controllers/userServices.controllers";
 import Users from "../Entities/users.entity";
 import ensureAuthMiddleware from "../Middlewares/ensureAuth.middleware";
 import ensureIsActive from "../Middlewares/ensureIsActive.middleware";
