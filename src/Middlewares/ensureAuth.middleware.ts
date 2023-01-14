@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import AppError from "../errors";
-import Jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import "dotenv/config";
 
 const ensureAuthMiddleware = (req: Request, res: Response, next:NextFunction) => {    
@@ -11,7 +11,7 @@ const ensureAuthMiddleware = (req: Request, res: Response, next:NextFunction) =>
     
     const token = authorization.split(" ")[1];
     
-    return Jwt.verify(token, process.env.SECRET_KEY, (error:Error, decoded:JwtPayload) => {
+    return jwt.verify(token, process.env.SECRET_KEY, (error:Error, decoded:JwtPayload) => {
         if (error){
             throw new AppError("Missing authorization headers", 401);
         };
