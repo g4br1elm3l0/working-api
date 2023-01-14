@@ -1,10 +1,9 @@
 export interface IWorkerServiceRequest {
     userId: string
-    userServiceId: string
-    acceptedAt?: string
-    
+    userServiceId: string    
 }
-
-// export interface IWorkerServiceResponse {
-    
-// }
+export interface IWorkerServiceResponse {
+    userId: string
+    userServiceId: string
+    acceptedAt: string
+}

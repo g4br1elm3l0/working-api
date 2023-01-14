@@ -1,6 +1,5 @@
 import dataSource from "../../data-source";
 import WorkerServices from "../../Entities/workerServices.entity";
-import AppError from "../../errors";
 import { usersWithoutPasswordSerializer } from "../../Serializers/users.serializers";
 
 export const retrieveWorkerService = async (id:string) => {
@@ -13,12 +12,6 @@ export const retrieveWorkerService = async (id:string) => {
             id
         },
     })
-
-    if(!workerService.length){
-        throw new AppError("Not found worker service", 404);
-
-    }
-
     const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerService, {
         stripUnknown: true
     });

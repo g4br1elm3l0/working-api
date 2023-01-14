@@ -10,18 +10,8 @@ export const listWorkerService = async () => {
     const workerServicesList = await workerRepository.find({
         relations: {
             user: true, userService: true
-        },
-        where: {
-            user: {
-                isWorker: true
-            }
-        },
+        }
     })
-
-    if(workerServicesList.length === 0){
-        throw new AppError("Not found worker services", 404);
-
-    }
 
     const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerServicesList, {
         stripUnknown: true

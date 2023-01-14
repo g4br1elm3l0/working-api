@@ -1,9 +1,9 @@
+import { FindOptionsWhere } from "typeorm";
 import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
 import WorkerServices from "../../Entities/workerServices.entity";
 import AppError from "../../errors";
 import { IWorkerServiceRequest } from "../../Interfaces/WorkerServices";
-import { responseUsersSerializer } from "../../Serializers/users.serializers";
 import Users from './../../Entities/users.entity';
 
 export const createWorkerService = async (userData: IWorkerServiceRequest) => {
@@ -13,30 +13,35 @@ export const createWorkerService = async (userData: IWorkerServiceRequest) => {
     
     const searchUser = await userRepository.findOneBy({id: userData.userId});
     if (!searchUser){
-        throw new AppError("User Not Found", 404);
+        throw new AppError("User was Not Found", 404);
     }
-    else if (searchUser.isWorker === false) {
-        throw new AppError("Need to be a worker account", 409);
-    };
 
     const searchUserService = await userServicesRepository.findOneBy({id: userData.userServiceId});
     if (!searchUserService){
-        throw new AppError("User Service Not Found", 404);
+        throw new AppError("User Service was Not Found", 404);
     };
 
-    const workerService = workerServiceRepository.create(userData);
+    const searchWorkerServiceByUserService = await workerServiceRepository.findOne({
+        where: {
+            userService: {
+                id: userData.userServiceId
+            }
+        }
+    })
+    if (searchWorkerServiceByUserService){
+        throw new AppError("This User Service already was accepted", 409)
+    }
 
-    
-    workerService.user = searchUser;
-    workerService.userService = searchUserService;
-
+    const workerService = {
+        user: searchUser,
+        userService: searchUserService
+    }
     const createdWorkerService = await workerServiceRepository.save(workerService)
-
     
     const {password, ...userWithoutPassword} = createdWorkerService.user
-    console.log(createdWorkerService)
+    const {user, ...serviceWithoutUser} = createdWorkerService
     return {
-        ...createdWorkerService,
+        ...serviceWithoutUser,
         worker: userWithoutPassword
     };
 }
