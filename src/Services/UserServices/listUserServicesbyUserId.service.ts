@@ -7,9 +7,16 @@ export const listUserServicesbyUserIdService = async (userId: string): Promise<I
 
     const userServicesRepository = dataSource.getRepository(UserServices);
 
-     const SearchUserServiceByUserId = await userServicesRepository.findBy({
-        id: userId
-    })
+     const SearchUserServiceByUserId = await userServicesRepository.find({
+        where: {
+            user: {
+                id: userId
+            }
+        },
+        relations: {
+            category: true
+        }     
+    });
 
     return SearchUserServiceByUserId;
 }
