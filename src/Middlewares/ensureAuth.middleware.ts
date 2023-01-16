@@ -23,7 +23,7 @@ const ensureAuthMiddleware = async ( req: Request, res: Response, next: NextFunc
             isActive: decoded.isActive,
             isAdm:    decoded.isAdm
         }
-
+        
         return next();
     });
 };

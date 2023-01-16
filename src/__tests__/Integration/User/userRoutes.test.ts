@@ -7,13 +7,13 @@ import { mockedUser, mockedUserAdm, mockedUserAdmLogin, mockedUserAdmWorker, moc
 describe("/users", () => {
     let connection: DataSource;
 
-    beforeAll(async () => {
+    beforeAll( async () => {
        await dataSource.initialize()
             .then( res => connection = res ) 
             .catch( err => console.log(err) );
     });
 
-    afterAll(async () => {
+    afterAll( async () => {
         await connection.destroy();
     });
 
@@ -47,7 +47,7 @@ describe("/users", () => {
         expect(response.status).toBe(201);
     });
 
-    test("POST /users - should not be able to create a user that already exists", async () => {
+    test("POST /users - Should not be able to create a user that already exists", async () => {
         const response = await request(app).post("/users").send(mockedUser);
 
         expect(response.body).toHaveProperty("message");
@@ -72,7 +72,7 @@ describe("/users", () => {
         expect(response.status).toBe(403);
     });
 
-    test("GET /users - Shoul not be able to list user without authetication", async () => {
+    test("GET /users - Should not be able to list user without authetication", async () => {
         const response = await request(app).get("/users");
 
         expect(response.body).toHaveProperty("message");
@@ -97,7 +97,7 @@ describe("/users", () => {
         expect(response.status).toBe(403);
     });
 
-    test("GET /users/workers - Shoul not be able to list workers without authetication", async () => {
+    test("GET /users/workers - Should not be able to list workers without authetication", async () => {
         const response = await request(app).get("/users/workers");
 
         expect(response.body).toHaveProperty("message");
