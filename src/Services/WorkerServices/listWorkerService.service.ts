@@ -3,6 +3,7 @@ import WorkerServices from "../../Entities/workerServices.entity";
 import AppError from "../../errors";
 import { IUserResponse } from "../../Interfaces/Users";
 import { usersWithoutPasswordSerializer } from "../../Serializers/users.serializers";
+import { listWorkerServiceReturnSerializer } from "../../Serializers/workerServices.serializers";
 import Users from './../../Entities/users.entity';
 
 export const listWorkerService = async () => {
@@ -24,8 +25,8 @@ export const listWorkerService = async () => {
 
     }
 
-    const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerServicesList, {
+    const correctUsersFormat = listWorkerServiceReturnSerializer.validate(workerServicesList, {
         stripUnknown: true
     });
-    return workerServicesList;
+    return correctUsersFormat;
 }
