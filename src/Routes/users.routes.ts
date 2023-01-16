@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createJobsController, listAllJobsController, listJobsOfUserController } from "../Controllers/jobs.controllers";
+import { createJobsController, listAllJobsController, listJobsOfUserController, listServiceByIdController } from "../Controllers/jobs.controllers";
 import Users from "../Entities/users.entity";
 import ensureAuthMiddleware from "../Middlewares/ensureAuth.middleware";
 import ensureIsActive from "../Middlewares/ensureIsActive.middleware";
@@ -21,7 +21,7 @@ userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listUsersControl
 userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ) // listar um usuário específco (apenas administradores/dono)
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersController) // listar todos os trabalhadores (apenas administradores)
 userRouter.get('/services', ensureAuthMiddleware, ensureIsWorker, listAllJobsController) // listar todos os serviços de todos os usuários
-userRouter.get('/services/:servicesId', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices)) // listar um serviço específico
+userRouter.get('/services/:servicesId', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices), listServiceByIdController) // listar um serviço específico
 userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), listJobsOfUserController) // listar todos os serviços de um usuário (apenas administradores/dono)
 
 userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController) // atualizar um usuário específico (apenas administradores/dono)
