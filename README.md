@@ -1,5 +1,10 @@
 # WorKing API
 
+   ![This is an image](https://i.ibb.co/vHc9N1M/1-removebg-preview.png)
+   
+   ## "A melhor plataforma para se conseguir um trabalho de modo rápido, fácil e sem burocracias"
+
+
 ### End Points
 
 #### /login
