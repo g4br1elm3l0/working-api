@@ -46,6 +46,4 @@ export interface IUserServiceResponse {
         latitude: number
         longitude: number
     }
-
-
 }

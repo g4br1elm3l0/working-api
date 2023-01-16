@@ -14,7 +14,8 @@ export const listUserServicesbyUserIdService = async (userId: string): Promise<I
             }
         },
         relations: {
-            category: true
+            category: true,
+            location: true
         }     
     });
 
