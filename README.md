@@ -5,7 +5,7 @@
 #### /login
 
 
-**POST - FORMATO DE REQUISIÇÃO** > `STATUS 200`
+**POST - FORMATO DE REQUISIÇÃO** > 
 
 ```
 {
