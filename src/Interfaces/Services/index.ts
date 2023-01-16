@@ -1,20 +1,20 @@
-export interface IJobRequest { 
+export interface IServiceRequest { 
     title: string;
     description: string;
     femaleOnly: boolean;
 }
 
-export interface IJob { 
+export interface IServiceResponse { 
     id: string;
     title: string;
     description: string;
     femaleOnly: boolean;
     status: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
 
-export interface IJobUpdate { 
+export interface IServiceUpdate { 
     title: string;
     description: string;
     femaleOnly: boolean;
