@@ -12,8 +12,12 @@ export interface IUserServiceRequest {
     }
 }
 
+<<<<<<< HEAD
 
 export interface IUserService {
+=======
+export interface IUserService { 
+>>>>>>> 561f37ad240cfb5480b3f6736c0478e6dd2df1ee
     id: string;
     title: string;
     description: string;
