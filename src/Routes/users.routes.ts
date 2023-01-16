@@ -18,8 +18,8 @@ userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createU
 userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(jobsSerializer), createJobsController) // criar serviços do usuário
 
 userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listUsersController) // listar todos os usuários não trabalhadores (apenas administradores)
-userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ) // listar um usuário específco (apenas administradores/dono)
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersController) // listar todos os trabalhadores (apenas administradores)
+userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ) // listar um usuário específco (apenas administradores/dono)
 userRouter.get('/services', ensureAuthMiddleware, ensureIsWorker, listAllJobsController) // listar todos os serviços de todos os usuários
 userRouter.get('/services/:servicesId', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices)) // listar um serviço específico
 userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), listJobsOfUserController) // listar todos os serviços de um usuário (apenas administradores/dono)

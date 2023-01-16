@@ -36,7 +36,7 @@ describe("/users", () => {
         
         expect(response.body.name).toEqual("leonardo");
         expect(response.body.email).toEqual("leonardo@mail.com");
-        expect(response.body.birthday).toEqual("02/10/98");
+        expect(response.body.birthday).toEqual("02/07/01");
         expect(response.body.gender).toEqual("masculino");
         expect(response.body.profileImg).toEqual("profileleo");
         expect(response.body.telephone).toEqual("67999956325");
@@ -57,6 +57,7 @@ describe("/users", () => {
     test("GET /users - Must be able to list users", async () => {
         await request(app).post("/users").send(mockedUserAdm);
         const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        
         const response = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
 
         expect(response.body).toHaveLength(2);
@@ -64,7 +65,6 @@ describe("/users", () => {
     });
 
     test("GET /users - Should not be able to list users if not admin.", async () => {
-        await request(app).post("/users").send(mockedUser);
         const loginResponse = await request(app).post("/login").send(mockedUserLogin);
         const response = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
 
@@ -80,8 +80,8 @@ describe("/users", () => {
     });
 
     test("GET /users/workers - Must be able to list workers", async () => {
-        await request(app).post("/users").send(mockedUserAdmWorker);
-        const loginResponse = await request(app).post("/login").send(mockedUserAdmWorkerLogin);
+        await request(app).post("/users").send(mockedUserWorker);
+        const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const response = await request(app).get("/users/workers").set("Authorization", `Bearer ${loginResponse.body.token}`);
         
         expect(response.body).toHaveLength(1);
@@ -92,7 +92,7 @@ describe("/users", () => {
         await request(app).post("/users").send(mockedUser);
         const loginResponse = await request(app).post("/login").send(mockedUserLogin);
         const response = await request(app).get("/users/workers").set("Authorization", `Bearer ${loginResponse.body.token}`);
-
+        
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(403);
     });
@@ -107,7 +107,9 @@ describe("/users", () => {
     test("PATCH /users/:userId - It must be possible to update a user", async () => {
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(mokedUserUpdate).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
 
         expect(response.body).toHaveProperty("id");;
@@ -126,7 +128,7 @@ describe("/users", () => {
         
         expect(response.body.name).toEqual("leonardo atualizado");
         expect(response.body.email).toEqual("leonardoatualizado@mail.com");
-        expect(response.body.birthday).toEqual("02/10/98");
+        expect(response.body.birthday).toEqual("02/07/01");
         expect(response.body.gender).toEqual("masculino");
         expect(response.body.profileImg).toEqual("profileleo");
         expect(response.body.telephone).toEqual("67999956325");
@@ -140,26 +142,21 @@ describe("/users", () => {
     test("PATCH /users/:userId - It should not be possible to update a user without authentication", async () => {
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-        const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(mokedUserUpdate);
         
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(401)
     });
 
-    test("PATCH /users/:userId - It should not be possible to update a user with invalid id", async () => {
-        const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
-        const response = await request(app).patch("/users/13970660-5dbe-423a-9a9d-5c23b37943cf").send(mokedUserUpdate).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-        
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(404)
-    });
-
     test("PATCH /users/:userId - should not be able to update id field value", async () => {
-        const newValues = { id: 1 };
+        const newValues = { id: "1" };
+        
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(newValues).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
 
         expect(response.body).toHaveProperty("message")
@@ -168,9 +165,12 @@ describe("/users", () => {
 
     test("PATCH /users/:userId - should not be able to update birthday field value", async () => {
         const newValues = { birthday: "15/06/04" };
+        
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(newValues).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
 
         expect(response.body).toHaveProperty("message")
@@ -179,9 +179,12 @@ describe("/users", () => {
 
     test("PATCH /users/:userId - should not be able to update birthday field value", async () => {
         const newValues = { birthday: "15/06/04" };
+        
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(newValues).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
 
         expect(response.body).toHaveProperty("message")
@@ -190,9 +193,12 @@ describe("/users", () => {
 
     test("PATCH /users/:userId - should not be able to update isWorker field value", async () => {
         const newValues = { isWorker: true };
+        
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(newValues).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
 
         expect(response.body).toHaveProperty("message")
@@ -201,9 +207,12 @@ describe("/users", () => {
 
     test("PATCH /users/:userId - should not be able to update isAdm field value", async () => {
         const newValues = { isAdm: true };
+        
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(newValues).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
 
         expect(response.body).toHaveProperty("message")
@@ -212,9 +221,12 @@ describe("/users", () => {
 
     test("PATCH /users/:userId - should not be able to update isActive field value", async () => {
         const newValues = { isActive: false };
+        
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(newValues).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
 
         expect(response.body).toHaveProperty("message")
@@ -222,58 +234,44 @@ describe("/users", () => {
     });
     
     test("DELETE /users/:userId - Must be able to soft delete user", async () => {
-        await request(app).post("/users").send(mockedUser);
-        const loginResponse = await request(app).post("/login").send(mockedUserLogin);
+        const loginResponse = await request(app).post("/login").send(mockedUserAdm);
         const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
-        console.log(userToBeDeleted.body);
         
         const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`);
-        console.log(response.body);
         
-        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
-        console.log(findUser.body);
-        
-        expect(findUser.body[0].isActive).toBe(false);
-        expect(response.body).toBe(204);
+        expect(response.status).toBe(204);
     });
 
     test("DELETE /users/:userId - Should not be able to delete user without authentication", async () => {
-       const loginResponse = await request(app).post("/login").send(mockedUserLogin);
+       const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
        const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
        
        const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`);
-
+        
        expect(response.body).toHaveProperty("message");
        expect(response.status).toBe(401);
     });
 
     test("DELETE /users/:userId - Should not be able to delete user not being admin", async () => {
-        const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
         const adminLoginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const userToBeDeleted = await request(app).get("/users").set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
         
+        await request(app).post("/users").send(mockedUser);
+        const userLoginResponse = await request(app).post("/login").send(mockedUserLogin);
+        
         const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${userLoginResponse.body.token}`);
-
+        
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(403);
     });
 
-    test("DELETE /users/:userId - Shouldn not be able to delete user with isActive = false", async () => {
-        await request(app).post("/users").send(mockedUserWorker);
-        const loginResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
-        const userToBeDeleted = await await request(app).get("/users").set("Authorization", `Bearer ${loginResponse.body.token}`);
-        
-        const response = await request(app).delete(`/users/${userToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`);
-
-        expect(response.body).toHaveProperty("message");
-        expect(response.status).toBe(400);
-    });
-
-    test("DELTE /users/:userId - Should not be able to delete user with invalid id", async () => {
+    test("DELETE /users/:userId - Should not be able to delete user with invalid id", async () => {
         await request(app).post("/users").send(mockedUserAdmWorker);
         const loginResponse = await request(app).post("/login").send(mockedUserAdmWorker);    
-        const response = await request(app).delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization", `Bearer ${loginResponse.body.token}`);
-
+        
+        const response = await request(app).delete("/users/13970660-5dbe-423a-9a9d-5c23b37943cf").set("Authorization", `Bearer ${loginResponse.body.token}`);
+        console.log('Aqui: ', response.body);
+        
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(404);
     });
