@@ -1,6 +1,6 @@
 import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
-import { IUserService, IUserServiceResponse } from "../../Interfaces/UserServices";
+import { IUserServiceResponse } from "../../Interfaces/UserServices";
 import { userServicesResponseSerializer } from "../../Serializers/userService.serializers";
 
 export const listAllUserServicesService = async (): Promise<IUserServiceResponse[]> => {
