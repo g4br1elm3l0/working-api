@@ -10,7 +10,6 @@ export interface IWorkerServiceListReturn {
         id: string
         name: string
         email: string
-        password: string
         gender: string
         birthday: string
         profileImg: string
@@ -20,7 +19,7 @@ export interface IWorkerServiceListReturn {
         isAdm: boolean
         createdAt: string
         updatedAt: string
-        deletedAt: string | null
+
     }
     userService: {
         id: string
@@ -30,7 +29,7 @@ export interface IWorkerServiceListReturn {
         status: string
         createdAt: string
         updatedAt: string 
-        deletedAt: string | null
+
     }
 }
 

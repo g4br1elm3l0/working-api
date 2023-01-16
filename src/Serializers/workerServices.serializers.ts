@@ -16,7 +16,6 @@ export const uniqueWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceListRet
         id: yup.string().required(),
         name: yup.string().required(),
         email: yup.string().required(),
-        password: yup.string().notRequired(),
         gender: yup.string().required(),
         birthday: yup.string().required(),
         profileImg: yup.string().required(),
@@ -25,8 +24,8 @@ export const uniqueWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceListRet
         isWorker: yup.boolean().required(),
         isAdm: yup.boolean().required(),
         createdAt: yup.string().required(),
-        updatedAt: yup.string().required(),
-        deletedAt: yup.string().required().nullable(),
+        updatedAt: yup.string().required()
+
     }),
     userService: yup.object().shape({
         id: yup.string().required(),
@@ -35,8 +34,8 @@ export const uniqueWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceListRet
         femaleOnly: yup.boolean().required(),
         status: yup.string().required(),
         createdAt: yup.string().required(),
-        updatedAt: yup.string().required(),
-        deletedAt: yup.string().required().nullable()
+        updatedAt: yup.string().required()
+
     })
     
 }); 
