@@ -11,3 +11,8 @@ export const mockedService2 : IUserServiceRequest = {
     description: "Ela liga porém tem uma faixa verde atrapalhando de ver",
     category: "Assistência Técnica"
 };
+
+export const mockedUpdateService1 = {
+    title: "Meu celular caiu na piscina atualizado",
+    description: "Me empurraram e acabei caindo na piscina. Ele não quis ligar atualizado"
+};
