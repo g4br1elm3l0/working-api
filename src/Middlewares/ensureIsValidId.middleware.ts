@@ -3,8 +3,6 @@ import { EntityTarget, ObjectLiteral } from "typeorm";
 import dataSource from "../data-source";
 import AppError from "../errors";
 
-
-
 export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, entity2: EntityTarget<ObjectLiteral> = entity1) => async (req: Request, res: Response, next: NextFunction) => {
     if(req.params.userId){
         let id = req.params.userId

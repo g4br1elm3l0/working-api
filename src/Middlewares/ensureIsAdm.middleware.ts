@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import AppError from "./../errors";
 
 const ensureIsAdmMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    const IsAdm = req.user.isAdm;
+    const { user, params } = req;
 
-    if (!IsAdm && req.user.id !== req.params.userId) {
+    if (!user.isAdm && user.id !== params.userId) {
         throw new AppError("Missing admin permissions", 403);
     };
     
