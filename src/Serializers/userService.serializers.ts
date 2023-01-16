@@ -32,6 +32,7 @@ export const oneUserServiceResponseSerializer: SchemaOf<IUserServiceResponse> = 
             id: yup.string().required(),
             name: yup.string().required()
         }),
+
     location: yup.object({
         latitude: yup.number().required(),
         longitude: yup.number().required()
