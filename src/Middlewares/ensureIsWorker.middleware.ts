@@ -2,13 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import AppError from './../errors';
 
 const ensureIsWorker = async (req: Request, res: Response, next: NextFunction) => {
-    const isWorker = req.user.isWorker
+    const { user } = req;
 
-    if (!isWorker) {
+    if (!user.isWorker) {
         throw new AppError('Missing workers permissions!', 403)
-    }
+    };
 
-    return next()
-}
+    return next();
+};
 
-export default ensureIsWorker
+export default ensureIsWorker;
