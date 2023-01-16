@@ -1,15 +1,19 @@
 import Categories from "../../Entities/categories.entity";
 import { IUserResponse } from "../Users";
 
-export interface IUserServiceRequest  { 
+export interface IUserServiceRequest {
     title: string;
     description: string;
     femaleOnly?: boolean;
     category: string;
+    location: {
+        latitude: number
+        longitude: number
+    }
 }
 
 
-export interface IUserService { 
+export interface IUserService {
     id: string;
     title: string;
     description: string;
@@ -21,7 +25,7 @@ export interface IUserService {
     category: Categories
 }
 
-export interface IUserServiceResponse { 
+export interface IUserServiceResponse {
     id: string,
     title: string,
     description: string,
@@ -37,5 +41,12 @@ export interface IUserServiceResponse {
     category: {
         id: string,
         name: string
+    },
+
+    location: {
+        latitude: number
+        longitude: number
     }
+
+
 }

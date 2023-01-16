@@ -11,10 +11,10 @@ class Location {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({ type: "decimal" })
     longitude: number;
 
-    @Column()
+    @Column({ type: "decimal" })
     latitude: number;
 
     @OneToMany(() => UserServices, (service) => service.location)
