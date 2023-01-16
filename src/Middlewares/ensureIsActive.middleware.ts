@@ -4,17 +4,20 @@ import Users from "../Entities/users.entity";
 import AppError from "../errors";
 
 const ensureIsActive = async (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.userId
+    const { userId: id } = req.params;
 
-    const findUser = await dataSource.getRepository(Users).findOneBy({
-        id: id
-    })
+    const userRepository = dataSource.getRepository(Users)
+    const findUser = await userRepository.findOneBy({ id: id })
+
+    if (!findUser){
+        throw new AppError("id was not found", 404);
+    };
 
     if (!findUser.isActive) {
         throw new AppError('User is not active', 403)
-    }
+    };
 
     return next()
-}
+};
 
 export default ensureIsActive;
