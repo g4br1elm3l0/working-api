@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createJobsController, listAllJobsController, listJobsOfUserController, listServiceByIdController, listServicesByUserController } from "../Controllers/jobs.controllers";
+import { createJobsController, listAllJobsController, listJobsOfUserController, listServiceByIdController, listServicesByUserController, updateServiceController } from "../Controllers/jobs.controllers";
 import Users from "../Entities/users.entity";
 import ensureAuthMiddleware from "../Middlewares/ensureAuth.middleware";
 import ensureIsActive from "../Middlewares/ensureIsActive.middleware";
@@ -27,7 +27,7 @@ userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware,
 // userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), listServicesByUserController) // listar todos os serviços de um usuário (apenas administradores/dono)
 
 userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController) // atualizar um usuário específico (apenas administradores/dono)
-userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware) // atualizar um serviço de um usuário específico (apenas administradores/dono)
+userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsActive, updateServiceController) // atualizar um serviço de um usuário específico (apenas administradores/dono)
 
 userRouter.delete('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteUserController) // deletar um usuário (apenas administradores/dono)
 userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware) // deletar um serviço (apenas administradores/dono)

@@ -13,3 +13,9 @@ export interface IJob {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface IJobUpdate { 
+    title: string;
+    description: string;
+    femaleOnly: boolean;
+}

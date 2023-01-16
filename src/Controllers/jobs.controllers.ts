@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { IJobRequest } from "../Interfaces/Jobs";
+import { IJobRequest, IJobUpdate } from "../Interfaces/Jobs";
 import { createJobService } from "../Services/Jobs/createJobsUsers.service";
 import { listAllJobsService } from "../Services/Jobs/listAllJobs.service";
 import { listJobsOfUserService } from "../Services/Jobs/listJobsUsers.service";
 import { listServiceByIdService } from "../Services/Jobs/listServiceById.service";
 import listServicesByUserService from "../Services/Jobs/listServicesByUser.service";
+import updateServiceService from "../Services/Jobs/updateService.service";
 
 export const createJobsController =async (req: Request, res: Response) => {
     const userData: IJobRequest = req.body
@@ -33,4 +34,11 @@ export const listServicesByUserController = async(req: Request, res: Response) =
     const userId: string = req.params.id
     const services = await listServicesByUserService(userId)
     return res.json(services)
+}
+
+export const updateServiceController = async (req: Request, res: Response) => {
+    const userData: IJobUpdate = req.body
+    const serviceId: string = req.params.id
+    const updatedService = await updateServiceService(userData, serviceId)
+    return res.json(updatedService)
 }
