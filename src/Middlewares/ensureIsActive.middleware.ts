@@ -7,7 +7,7 @@ const ensureIsActive = async (req: Request, res: Response, next: NextFunction) =
     const id = req.params.userId
 
     const findUser = await dataSource.getRepository(Users).findOneBy({
-        id
+        id: id
     })
 
     if (!findUser.isActive) {

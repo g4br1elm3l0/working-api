@@ -5,14 +5,15 @@ import { userServicesResponseSerializer } from "../../Serializers/userService.se
 
 export const listAllUserServicesService = async (): Promise<IUserServiceResponse[]> => {
     const UserServiceRepository = dataSource.getRepository(UserServices);
-    
+
     const userServices = await UserServiceRepository.find({
         where: {
             status: "pendente"
         },
         relations: {
             user: true,
-            category: true
+            category: true,
+            location: true
         }
     });
 
