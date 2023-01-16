@@ -20,3 +20,22 @@ export interface IUserService {
     user: IUserResponse;
     category: Categories
 }
+
+export interface IUserServiceResponse { 
+    id: string,
+    title: string,
+    description: string,
+    status: string,
+    createdAt: Date,
+    user: {
+        id: string,
+        name: string,
+        email: string,
+        profileImg: string,
+        telephone: string,
+    },
+    category: {
+        id: string,
+        name: string
+    }
+}

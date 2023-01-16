@@ -1,8 +1,9 @@
 import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
-import { IUserService } from "../../Interfaces/UserServices";
+import { IUserService, IUserServiceResponse } from "../../Interfaces/UserServices";
+import { userServicesResponseSerializer } from "../../Serializers/userService.serializers";
 
-export const listAllUserServicesService = async (): Promise<IUserService[]> => {
+export const listAllUserServicesService = async (): Promise<IUserServiceResponse[]> => {
     const UserServiceRepository = dataSource.getRepository(UserServices);
     
     const userServices = await UserServiceRepository.find({
@@ -15,5 +16,9 @@ export const listAllUserServicesService = async (): Promise<IUserService[]> => {
         }
     });
 
-    return userServices;
-}
+    const correctUserServicesFormat = userServicesResponseSerializer.validate(userServices, {
+        stripUnknown: true
+    })
+
+    return correctUserServicesFormat;
+};
