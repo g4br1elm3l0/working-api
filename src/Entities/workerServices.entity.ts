@@ -1,5 +1,5 @@
 import {
-    Column,
+    CreateDateColumn,
     Entity,
     JoinColumn,
     ManyToOne,
@@ -15,7 +15,7 @@ class WorkerServices {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ nullable: true })
+    @CreateDateColumn()
     acceptedAt: Date;
 
     @ManyToOne(() => Users, user => user.id)

@@ -1,6 +1,5 @@
 import * as yup from "yup"
 import { SchemaOf } from "yup";
-import { IJobRequest } from "../Interfaces/Jobs";
 import { IWorkerServiceListReturn, IWorkerServiceRequest } from "../Interfaces/WorkerServices";
 
 export const workerServiceSerializer: SchemaOf<IWorkerServiceRequest> = yup.object().shape({

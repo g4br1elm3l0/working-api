@@ -1,3 +1,4 @@
+import { FindOptionsWhere } from "typeorm";
 import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
 import WorkerServices from "../../Entities/workerServices.entity";
@@ -13,31 +14,35 @@ export const createWorkerService = async (userData: IWorkerServiceRequest) => {
     
     const searchUser = await userRepository.findOneBy({id: userData.userId});
     if (!searchUser){
-        throw new AppError("User Not Found", 404);
+        throw new AppError("User was Not Found", 404);
     }
-    else if (searchUser.isWorker === false) {
-        throw new AppError("Need to be a worker account", 409);
-    };
 
     const searchUserService = await userServicesRepository.findOneBy({id: userData.userServiceId});
     if (!searchUserService){
-        throw new AppError("User Service Not Found", 404);
+        throw new AppError("User Service was Not Found", 404);
     };
 
-    searchUserService.status = "aceito"
+    const searchWorkerServiceByUserService = await workerServiceRepository.findOne({
+        where: {
+            userService: {
+                id: userData.userServiceId
+            }
+        }
+    })
+    if (searchWorkerServiceByUserService){
+        throw new AppError("This User Service already was accepted", 409)
+    }
 
-    const userService = userServicesRepository.create(searchUserService)
-
-    userServicesRepository.save(userService)
-
-    const workerService = workerServiceRepository.create(userData);
-    workerService.user = searchUser;
-    workerService.userService = searchUserService;
-
-
-    workerServiceRepository.save(workerService)
-
-
-    return workerService
-
+    const workerService = {
+        user: searchUser,
+        userService: searchUserService
+    }
+    const createdWorkerService = await workerServiceRepository.save(workerService)
+    
+    const {password, ...userWithoutPassword} = createdWorkerService.user
+    const {user, ...serviceWithoutUser} = createdWorkerService
+    return {
+        ...serviceWithoutUser,
+        worker: userWithoutPassword
+    };
 }
