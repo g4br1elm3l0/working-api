@@ -15,9 +15,6 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
     const userRepository = dataSource.getRepository(Users)
     
     const searchUser = await userRepository.findOneBy({id: userReq.id});
-    if (!searchUser){
-        throw new AppError("User was Not Found", 404);
-    }
 
     const searchUserService = await userServicesRepository.findOneBy({id: userServiceId});
     if (!searchUserService){
