@@ -1,5 +1,9 @@
 import { Router } from "express";
+<<<<<<< HEAD
 import {createUserServiceController, deleteJobsController, listAllUserServicesController, UserServicesbyUserIdController } from "../Controllers/jobs.controllers";
+=======
+import { createUserServiceController, deleteUserServiceController, listAllUserServicesController, UserServicesbyUserIdController } from "../Controllers/jobs.controllers";
+>>>>>>> 4fa1b6133471182d3525d9aad9e544087959c7df
 import Users from "../Entities/users.entity";
 import ensureAuthMiddleware from "../Middlewares/ensureAuth.middleware";
 import ensureIsActive from "../Middlewares/ensureIsActive.middleware";
@@ -25,9 +29,13 @@ userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware,
 userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users)) // listar um usuário específco (apenas administradores/dono)
 
 userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController) // atualizar um usuário específico (apenas administradores/dono)
-userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware) // atualizar um serviço de um usuário específico (apenas administradores/dono)
+userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices)) // atualizar um serviço de um usuário específico (apenas administradores/dono)
 
 userRouter.delete('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteUserController) // deletar um usuário (apenas administradores/dono)
+<<<<<<< HEAD
 userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, deleteJobsController) // deletar um serviço (apenas administradores/dono)
+=======
+userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices), deleteUserServiceController) // deletar um serviço (apenas administradores/dono)
+>>>>>>> 4fa1b6133471182d3525d9aad9e544087959c7df
 
 export default userRouter
