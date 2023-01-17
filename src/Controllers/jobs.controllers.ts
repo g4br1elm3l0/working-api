@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { IServiceUpdate } from "../Interfaces/Services";
 import { IUserServiceRequest } from "../Interfaces/UserServices";
-import { listServiceByIdService } from "../Services/Services/listServiceById.service";
-import updateServiceService from "../Services/Services/updateService.service";
 import { createUserServiceService } from "../Services/UserServices/createUserService.service";
 import deleteUserService from "../Services/UserServices/deleteUserService.service";
 import { listAllUserServicesService } from "../Services/UserServices/listAllUserServices.service";
 import { listUserServicesbyUserIdService } from "../Services/UserServices/listUserServicesbyUserId.service";
+import updateServiceService from "../Services/UserServices/updateService.service";
+import { listServiceByIdService } from "../Services/UserServices/listServiceById.service";
 
 export const createUserServiceController =async (req: Request, res: Response) => {
     const userData: IUserServiceRequest = req.body
@@ -32,7 +32,7 @@ export const listServiceByIdController = async (req: Request, res:Response) => {
 }
 
 export const updateServiceController = async (req: Request, res: Response) => {
-    const userData: IServiceUpdate = req.body
+    const userData: IUserServiceRequest = req.body
     const serviceId: string = req.params.serviceId
     const updatedService = await updateServiceService(userData, serviceId)
     return res.json(updatedService)

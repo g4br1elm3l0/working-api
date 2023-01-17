@@ -19,7 +19,6 @@ import {
 } from './../Controllers/users.controllers';
 import ensureIsWorker from "../Middlewares/ensureIsWorker.middleware";
 import UserServices from "../Entities/userServices.entity";
-import { serviceSerializer } from "../Serializers/jobs.serializers";
 import { 
     createUserServiceController, 
     deleteUserServiceController, 

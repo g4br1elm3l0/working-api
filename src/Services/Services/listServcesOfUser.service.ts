@@ -1,17 +1,23 @@
 import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
-import { IServiceResponse } from "../../Interfaces/Services";
-import { serviceListResponseSerializer } from "../../Serializers/jobs.serializers";
+import { IUserService } from "../../Interfaces/UserServices";
 
-export const listServicesOfUserService = async (userId: string): Promise<IServiceResponse[]> => {
-    const serviceRepository = dataSource.getRepository(UserServices);
 
-    const service = await serviceRepository.findBy({ id: userId });
+export const listUserServicesbyUserIdService = async (userId: string): Promise<IUserService[]> => {
 
-    const serviceResponse = serviceListResponseSerializer.validate(service, {
-        abortEarly: false,
-        stripUnknown: true
+    const userServicesRepository = dataSource.getRepository(UserServices);
+
+     const SearchUserServiceByUserId = await userServicesRepository.find({
+        where: {
+            user: {
+                id: userId
+            }
+        },
+        relations: {
+            category: true,
+            location: true
+        }     
     });
 
-    return serviceResponse;
-};
+    return SearchUserServiceByUserId;
+}
