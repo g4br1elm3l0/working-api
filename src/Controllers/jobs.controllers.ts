@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
+import { IServiceUpdate } from "../Interfaces/Services";
 import { IUserServiceRequest } from "../Interfaces/UserServices";
+import { listServiceByIdService } from "../Services/Services/listServiceById.service";
+import updateServiceService from "../Services/Services/updateService.service";
 import { createUserServiceService } from "../Services/UserServices/createUserService.service";
 import { listAllUserServicesService } from "../Services/UserServices/listAllUserServices.service";
 import { listUserServicesbyUserIdService } from "../Services/UserServices/listUserServicesbyUserId.service";
-
 
 export const createUserServiceController =async (req: Request, res: Response) => {
     const userData: IUserServiceRequest = req.body
@@ -20,4 +22,17 @@ export const UserServicesbyUserIdController = async (req: Request, res: Response
 export const listAllUserServicesController = async (req: Request, res: Response) => {
     const jobs = await listAllUserServicesService()
     return res.status(200).json(jobs)
+}
+
+export const listServiceByIdController = async (req: Request, res:Response) => {
+    const serviceId: string = req.params.serviceId
+    const service = await listServiceByIdService(serviceId)
+    return res.json(service)
+}
+
+export const updateServiceController = async (req: Request, res: Response) => {
+    const userData: IServiceUpdate = req.body
+    const serviceId: string = req.params.serviceId
+    const updatedService = await updateServiceService(userData, serviceId)
+    return res.json(updatedService)
 }

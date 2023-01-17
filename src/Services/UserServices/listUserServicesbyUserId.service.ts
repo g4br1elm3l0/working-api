@@ -4,7 +4,8 @@ import { IUserService } from "../../Interfaces/UserServices";
 
 
 export const listUserServicesbyUserIdService = async (userId: string): Promise<IUserService[]> => {
-
+    console.log(userId);
+    
     const userServicesRepository = dataSource.getRepository(UserServices);
 
      const SearchUserServiceByUserId = await userServicesRepository.find({
