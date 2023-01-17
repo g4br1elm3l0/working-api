@@ -3,7 +3,6 @@ import UserServices from '../../Entities/userServices.entity'
 import AppDataSource from '../../data-source'
 import Users from '../../Entities/users.entity'
 import { IJob, IJobUpdate } from '../../Interfaces/Jobs'
-import { jobUpdateSerializer } from '../../Serializers/jobs.serializers'
 import { oneUserServiceResponseSerializer } from '../../Serializers/userService.serializers'
 import {IUserServiceRequest} from '../../Interfaces/UserServices'
 
