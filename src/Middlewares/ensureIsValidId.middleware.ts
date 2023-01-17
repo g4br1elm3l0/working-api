@@ -14,11 +14,12 @@ export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, 
         
         const searchDataOnRepo = await repo.findOneBy({ id: id });    
         if (!searchDataOnRepo){
-            throw new AppError("id was not found", 404);
+            throw new AppError("id was not found user", 404);
         };
     }
     if(req.params.servicesId){
-        let id = req.params.userId
+
+        let id = req.params.servicesId
         if( !id ) {
             throw new AppError( 'Invalid id', 404 );
         };
@@ -27,7 +28,7 @@ export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, 
         
         const searchDataOnRepo = await repo.findOneBy({ id: id });    
         if (!searchDataOnRepo){
-            throw new AppError("id was not found", 404);
+            throw new AppError("id was not found service", 404);
         };
     }
     return next();

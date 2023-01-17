@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { IUserServiceRequest } from "../Interfaces/UserServices";
 import { createUserServiceService } from "../Services/UserServices/createUserService.service";
+import deleteUserService from "../Services/UserServices/deleteUserService.service";
 import { listAllUserServicesService } from "../Services/UserServices/listAllUserServices.service";
 import { listUserServicesbyUserIdService } from "../Services/UserServices/listUserServicesbyUserId.service";
 
@@ -20,4 +21,10 @@ export const UserServicesbyUserIdController = async (req: Request, res: Response
 export const listAllUserServicesController = async (req: Request, res: Response) => {
     const jobs = await listAllUserServicesService()
     return res.status(200).json(jobs)
+}
+
+export const deleteUserServiceController = async (req: Request, res: Response) => {
+    await deleteUserService(req.params.id)
+
+    return res.status(204).json({})
 }
