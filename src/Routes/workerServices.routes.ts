@@ -11,7 +11,7 @@ import { workerServiceSerializer } from "../Serializers/workerServices.serialize
 const workerServicesRoutes = Router()
 
 workerServicesRoutes.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersServicesController)
-workerServicesRoutes.post('', ensureAuthMiddleware, ensureIsWorker, ensureIsValidDataMiddleware(workerServiceSerializer), createWorkersServicesController)
+workerServicesRoutes.post('/:id', ensureAuthMiddleware, ensureIsWorker, createWorkersServicesController)
 workerServicesRoutes.get('/:id', ensureAuthMiddleware, ensureIsAdmMiddleware, retrieveWorkersServicesController)
 
 export default workerServicesRoutes
