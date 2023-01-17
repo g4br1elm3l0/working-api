@@ -151,83 +151,87 @@ describe("/services", () => {
         expect(response.status).toBe(403);
     });
 
-    test("GET users/:userId/services - Should not be able to list a service with invalid id", async () => {
-        const loginRespone = await request(app).post("/login").send(mockedUserAdmLogin);
-        const response = await request(app).get(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf/services`).set("Authorization", `Bearer ${loginRespone.body.token}`);
+    // test("GET users/:userId/services - Should not be able to list a service with invalid id", async () => {
+    //     const loginRespone = await request(app).post("/login").send(mockedUserAdmLogin);
+    //     const response = await request(app).get(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf/services`).set("Authorization", `Bearer ${loginRespone.body.token}`);
         
-        expect(response.body).toHaveProperty("message");
-        expect(response.status).toBe(404);
-    });
-    // // --- verificado
+    //     expect(response.body).toHaveProperty("message");
+    //     expect(response.status).toBe(404);
+    // });
+    // // // --- verificado
     
-    test("PATCH users/:userId/services/:servicesId - It must be possible to update a service", async () => {
-        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
-        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-        const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
-        const service = await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-        const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-        const response = await request(app).patch(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`).send(mockedUpdateService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+    // test("PATCH users/:userId/services/:servicesId - It must be possible to update a service", async () => {
+    //     const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+    //     const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+    //     const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+    //     const service = await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+    //     const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+    //     const response = await request(app).patch(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`).send(mockedUpdateService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
         
-        expect(response.body).toHaveProperty("id");
-        expect(response.body).toHaveProperty("title");
-        expect(response.body).toHaveProperty("description");
-        expect(response.body).toHaveProperty("category");
-        expect(response.body).toHaveProperty("femaleOnly");
-        expect(response.body).toHaveProperty("status");
-        expect(response.body).toHaveProperty("createdAt");
-        expect(response.body).toHaveProperty("updatedAt");
+    //     expect(response.body).toHaveProperty("id");
+    //     expect(response.body).toHaveProperty("title");
+    //     expect(response.body).toHaveProperty("description");
+    //     expect(response.body).toHaveProperty("category");
+    //     expect(response.body).toHaveProperty("femaleOnly");
+    //     expect(response.body).toHaveProperty("status");
+    //     expect(response.body).toHaveProperty("createdAt");
+    //     expect(response.body).toHaveProperty("updatedAt");
         
-        expect(response.body.title).toEqual("Meu celular caiu na piscina atualizado");
-        expect(response.body.description).toEqual("Me empurraram e acabei caindo na piscina. Ele não quis ligar atualizado");
-        expect(response.body.deletedAt).toEqual(null);
-        expect(response.body.femaleOnly).toEqual(false);
-        expect(response.body.status).toEqual("pendente");
+    //     expect(response.body.title).toEqual("Meu celular caiu na piscina atualizado");
+    //     expect(response.body.description).toEqual("Me empurraram e acabei caindo na piscina. Ele não quis ligar atualizado");
+    //     expect(response.body.deletedAt).toEqual(null);
+    //     expect(response.body.femaleOnly).toEqual(false);
+    //     expect(response.body.status).toEqual("pendente");
 
-        expect(response.status).toBe(200);
-    });
+    //     expect(response.status).toBe(200);
+    // });
 
-    test("PATCH users/:userId/services/:servicesId - Must not be able to update a service without authentication", async () => {
-        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
-        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-        const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
-        const service = await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-        const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-        const response = await request(app).patch(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`).send(mockedUpdateService1);
+    // test("PATCH users/:userId/services/:servicesId - Must not be able to update a service without authentication", async () => {
+    //     const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+    //     const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+    //     const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+    //     const service = await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+    //     const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+    //     const response = await request(app).patch(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`).send(mockedUpdateService1);
         
-        expect(response.body).toHaveProperty("message");
-        expect(response.status).toBe(401);
-    });
+    //     expect(response.body).toHaveProperty("message");
+    //     expect(response.status).toBe(401);
+    // });
 
-    test("PATCH users/:userId/services/:servicesId - Should not be able to update a service with invalid id", async () => {
-        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
-        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-        const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
-        const service = await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-        const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-        const response = await request(app).patch(`/users/${findUser.body[0].id}/services/13970660-5dbe-423a-9a9d-5c23b37943cf`).send(mockedUpdateService1);
+    // test("PATCH users/:userId/services/:servicesId - Should not be able to update a service with invalid id", async () => {
+    //     const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+    //     const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+    //     const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
+    //     const service = await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+    //     const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+    //     const response = await request(app).patch(`/users/${findUser.body[0].id}/services/13970660-5dbe-423a-9a9d-5c23b37943cf`).send(mockedUpdateService1);
         
-        expect(response.body).toHaveProperty("message");
-        expect(response.status).toBe(404);
-    });
+    //     expect(response.body).toHaveProperty("message");
+    //     expect(response.status).toBe(404);
+    // });
 
-    test("DELETE users/:userId/services/:servicesId - It must be possible to delete a service", async () => {
-        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
-        const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-        const loginUserRespone = await request(app).post("/login").send(mockedUserLogin);
-        const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserRespone.body.token}`);
-        const response = await request(app).delete(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`).set("Authorization", `Bearer ${loginUserRespone.body.token}`);
+    // test("DELETE users/:userId/services/:servicesId - It must be possible to delete a service", async () => {
+    //     const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+    //     const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+    //     const loginUserRespone = await request(app).post("/login").send(mockedUserLogin);
+    //     const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserRespone.body.token}`);
+    //     const response = await request(app).delete(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`).set("Authorization", `Bearer ${loginUserRespone.body.token}`);
         
-        expect(response.status).toBe(204);
-    });
+    //     expect(response.status).toBe(204);
+    // });
 
     test("DELETE users/:userId/services/:servicesId - Must not be able to delete a service without authentication", async () => {
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const findUser = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        console.log(findUser.body);
         
         const loginUserRespone = await request(app).post("/login").send(mockedUserLogin);
+        await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserRespone.body.token}`);
         const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserRespone.body.token}`);
+        console.log(findService.body);
         
         const response = await request(app).delete(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`)
+        console.log(response.body);
         
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(401);

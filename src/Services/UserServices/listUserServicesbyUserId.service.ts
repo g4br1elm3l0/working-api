@@ -17,6 +17,8 @@ export const listUserServicesbyUserIdService = async (userId: string): Promise<I
             category: true
         }     
     });
+    console.log('listUserServicesbyUserIdService ', SearchUserServiceByUserId);
+    
 
     return SearchUserServiceByUserId;
 }

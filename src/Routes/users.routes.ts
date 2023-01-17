@@ -3,7 +3,6 @@ import {
     createServiceController, 
     listAllServicesController, 
     listServiceByIdController, 
-    listServicesByUserController, 
     updateServiceController 
 } from "../Controllers/service.controllers";
 import Users from "../Entities/users.entity";
@@ -27,6 +26,7 @@ import {
 import ensureIsWorker from "../Middlewares/ensureIsWorker.middleware";
 import UserServices from "../Entities/userServices.entity";
 import { serviceSerializer } from "../Serializers/jobs.serializers";
+import { UserServicesbyUserIdController } from "../Controllers/jobs.controllers";
 
 const userRouter = Router();
 
@@ -37,7 +37,7 @@ userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listUsersControl
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersController) // listar todos os trabalhadores (apenas administradores)
 userRouter.get('/services', ensureAuthMiddleware, ensureIsWorker, listAllServicesController) // listar todos os serviços de todos os usuários
 userRouter.get('/services/:servicesId', ensureAuthMiddleware, ensureIsWorker, ensureIsValidIdMiddleware(UserServices), listServiceByIdController) // listar um serviço específico
-userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), listServicesByUserController) // listar todos os serviços de um usuário (apenas administradores/dono)
+userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), UserServicesbyUserIdController) // listar todos os serviços de um usuário (apenas administradores/dono)
 userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), listAnUserController) // listar um usuário específco (apenas administradores/dono)
 
 userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController) // atualizar um usuário específico (apenas administradores/dono)
