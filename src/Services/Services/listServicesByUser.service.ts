@@ -14,7 +14,7 @@ const listServicesByUserService = async(userId: string): Promise<UserServices[]>
         },
         withDeleted: true
     });
-
+    
     return user.services;
 };
 

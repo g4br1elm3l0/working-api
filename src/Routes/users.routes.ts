@@ -1,17 +1,32 @@
 import { Router } from "express";
-import { createServiceController, listAllServicesController, listServiceByIdController, listServicesOfUserController, updateServiceController } from "../Controllers/service.controllers";
+import { 
+    createServiceController, 
+    listAllServicesController, 
+    listServiceByIdController, 
+    listServicesByUserController, 
+    updateServiceController 
+} from "../Controllers/service.controllers";
 import Users from "../Entities/users.entity";
 import ensureAuthMiddleware from "../Middlewares/ensureAuth.middleware";
 import ensureIsActive from "../Middlewares/ensureIsActive.middleware";
 import ensureIsAdmMiddleware from "../Middlewares/ensureIsAdm.middleware";
 import ensureIsValidDataMiddleware from "../Middlewares/ensureIsValidData.middleware";
 import { ensureIsValidIdMiddleware } from "../Middlewares/ensureIsValidId.middleware";
-import { requestUsersSerializer, updatedUserSerializer } from "../Serializers/users.serializers";
-import { createUserController, deleteUserController, listAnUserController, listUsersController, listWorkersController, UpdateUserController } from './../Controllers/users.controllers';
+import { 
+    requestUsersSerializer, 
+    updatedUserSerializer 
+} from "../Serializers/users.serializers";
+import { 
+    createUserController, 
+    deleteUserController, 
+    listAnUserController, 
+    listUsersController, 
+    listWorkersController, 
+    UpdateUserController 
+} from './../Controllers/users.controllers';
 import ensureIsWorker from "../Middlewares/ensureIsWorker.middleware";
 import UserServices from "../Entities/userServices.entity";
 import { serviceSerializer } from "../Serializers/jobs.serializers";
-import { UserServicesbyUserIdController } from "../Controllers/jobs.controllers";
 
 const userRouter = Router();
 
@@ -22,13 +37,13 @@ userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listUsersControl
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersController) // listar todos os trabalhadores (apenas administradores)
 userRouter.get('/services', ensureAuthMiddleware, ensureIsWorker, listAllServicesController) // listar todos os serviços de todos os usuários
 userRouter.get('/services/:servicesId', ensureAuthMiddleware, ensureIsWorker, ensureIsValidIdMiddleware(UserServices), listServiceByIdController) // listar um serviço específico
-userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), UserServicesbyUserIdController) // listar todos os serviços de um usuário (apenas administradores/dono)
+userRouter.get('/:userId/services', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), listServicesByUserController) // listar todos os serviços de um usuário (apenas administradores/dono)
 userRouter.get('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), listAnUserController) // listar um usuário específco (apenas administradores/dono)
 
 userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), ensureIsValidDataMiddleware(updatedUserSerializer), UpdateUserController) // atualizar um usuário específico (apenas administradores/dono)
-userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, updateServiceController) // atualizar um serviço de um usuário específico (apenas administradores/dono)
+userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices), updateServiceController) // atualizar um serviço de um usuário específico (apenas administradores/dono)
 
 userRouter.delete('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteUserController) // deletar um usuário (apenas administradores/dono)
-userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware) // deletar um serviço (apenas administradores/dono)
+userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsValidIdMiddleware(Users, UserServices), ensureIsAdmMiddleware) // deletar um serviço (apenas administradores/dono)
 
 export default userRouter
