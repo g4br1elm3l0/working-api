@@ -2,7 +2,7 @@ import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
 import AppError from "../../errors";
 
-const deleteJobsService = async (serviceId: string) => {
+const deleteUserService = async (serviceId: string) => {
     const serviceRepository = dataSource.getRepository(UserServices)
 
     const findService = await serviceRepository.findOneBy({
@@ -21,4 +21,4 @@ const deleteJobsService = async (serviceId: string) => {
     return {}
 }
 
-export default deleteJobsService;
+export default deleteUserService;
