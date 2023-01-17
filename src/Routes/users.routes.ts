@@ -22,6 +22,7 @@ import UserServices from "../Entities/userServices.entity";
 import { serviceSerializer } from "../Serializers/jobs.serializers";
 import { 
     createUserServiceController, 
+    deleteUserServiceController, 
     listAllUserServicesController, 
     listServiceByIdController, 
     updateServiceController, 
@@ -45,6 +46,6 @@ userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMi
 userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices), updateServiceController) // atualizar um serviço de um usuário específico (apenas administradores/dono)
 
 userRouter.delete('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteUserController) // deletar um usuário (apenas administradores/dono)
-userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices)) // deletar um serviço (apenas administradores/dono)
+userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices), deleteUserServiceController) // deletar um serviço (apenas administradores/dono)
 
 export default userRouter

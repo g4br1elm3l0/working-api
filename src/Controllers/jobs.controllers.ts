@@ -4,6 +4,7 @@ import { IUserServiceRequest } from "../Interfaces/UserServices";
 import { listServiceByIdService } from "../Services/Services/listServiceById.service";
 import updateServiceService from "../Services/Services/updateService.service";
 import { createUserServiceService } from "../Services/UserServices/createUserService.service";
+import deleteUserService from "../Services/UserServices/deleteUserService.service";
 import { listAllUserServicesService } from "../Services/UserServices/listAllUserServices.service";
 import { listUserServicesbyUserIdService } from "../Services/UserServices/listUserServicesbyUserId.service";
 
@@ -35,4 +36,10 @@ export const updateServiceController = async (req: Request, res: Response) => {
     const serviceId: string = req.params.serviceId
     const updatedService = await updateServiceService(userData, serviceId)
     return res.json(updatedService)
+}
+
+export const deleteUserServiceController = async (req: Request, res: Response) => {
+    await deleteUserService(req.params.id)
+
+    return res.status(204).json({})
 }

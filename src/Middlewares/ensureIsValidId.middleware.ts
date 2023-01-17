@@ -15,7 +15,7 @@ export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, 
         
         const searchDataOnRepo = await repo.findOneBy({ id: params.userId });
         if (!searchDataOnRepo){
-            throw new AppError("id was not found", 404);
+            throw new AppError("id was not found user", 404);
         };
     }
 
@@ -24,7 +24,7 @@ export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, 
         
         const searchDataOnRepo = await repo.findOneBy({ id: params.servicesId });    
         if (!searchDataOnRepo){
-            throw new AppError("id was not found", 404);
+            throw new AppError("id was not found service", 404);
         };
     }
 
