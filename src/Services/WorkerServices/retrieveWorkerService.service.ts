@@ -19,8 +19,8 @@ export const retrieveWorkerService = async (id:string) => {
 
     }
 
-    const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerService, {
-        stripUnknown: true
-    });
+    // const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerService, {
+    //     stripUnknown: true
+    // });
     return workerService;
 }

@@ -23,8 +23,8 @@ export const listWorkerService = async () => {
 
     }
 
-    const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerServicesList, {
-        stripUnknown: true
-    });
+    // const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerServicesList, {
+    //     stripUnknown: true
+    // });
     return workerServicesList;
 }

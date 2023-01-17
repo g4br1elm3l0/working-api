@@ -24,6 +24,10 @@ export const createWorkerService = async (userData: IWorkerServiceRequest) => {
         throw new AppError("User Service Not Found", 404);
     };
 
+    searchUserService.status = "aceito"
+
+    await userServicesRepository.save(searchUserService)
+
     const workerService = workerServiceRepository.create(userData);
 
     

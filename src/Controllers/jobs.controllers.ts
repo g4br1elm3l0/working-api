@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { IUserServiceRequest } from "../Interfaces/UserServices";
 import { createUserServiceService } from "../Services/UserServices/createUserService.service";
 import deleteUserService from "../Services/UserServices/deleteUserService.service";
-import deleteJobsService from "../Services/UserServices/deleteUserService.service";
 import { listAllUserServicesService } from "../Services/UserServices/listAllUserServices.service";
 import { listUserServicesbyUserIdService } from "../Services/UserServices/listUserServicesbyUserId.service";
 
