@@ -13,7 +13,7 @@ export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, 
     if(params.userId){
         const repo = dataSource.getRepository(entity1);
         
-        const searchDataOnRepo = await repo.findOneBy({ id: params.userid });    
+        const searchDataOnRepo = await repo.findOneBy({ id: params.userId });
         if (!searchDataOnRepo){
             throw new AppError("id was not found", 404);
         };

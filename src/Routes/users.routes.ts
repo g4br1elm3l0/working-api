@@ -27,11 +27,12 @@ import {
     updateServiceController, 
     UserServicesbyUserIdController 
 } from "../Controllers/jobs.controllers";
+import { userServiceSerializer } from "../Serializers/userService.serializers";
 
 const userRouter = Router();
 
 userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController)  // criar usuários
-userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(serviceSerializer), createUserServiceController) // criar serviços do usuário
+userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(userServiceSerializer), createUserServiceController) // criar serviços do usuário
 
 userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listUsersController) // listar todos os usuários não trabalhadores (apenas administradores)
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersController) // listar todos os trabalhadores (apenas administradores)
@@ -44,6 +45,6 @@ userRouter.patch('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMi
 userRouter.patch('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices), updateServiceController) // atualizar um serviço de um usuário específico (apenas administradores/dono)
 
 userRouter.delete('/:userId', ensureAuthMiddleware, ensureIsActive, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteUserController) // deletar um usuário (apenas administradores/dono)
-userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsValidIdMiddleware(Users, UserServices), ensureIsAdmMiddleware) // deletar um serviço (apenas administradores/dono)
+userRouter.delete('/:userId/services/:servicesId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users, UserServices)) // deletar um serviço (apenas administradores/dono)
 
 export default userRouter

@@ -10,8 +10,6 @@ export const createUserServiceService = async (serviceData: IUserServiceRequest,
 
     const userServicesRepository = dataSource.getRepository(UserServices);
     const userRepository = dataSource.getRepository(Users);
-
-    console.log(serviceData);
     
     const { category, location, ...data } = serviceData;
 
@@ -43,7 +41,6 @@ export const createUserServiceService = async (serviceData: IUserServiceRequest,
     userService.location = searchLocation;
 
     const CreatedUserService = await userServicesRepository.save(userService);
-    console.log('created user service ', CreatedUserService);
     
     const { password, ...userWithoutPassword } = CreatedUserService.user
 
