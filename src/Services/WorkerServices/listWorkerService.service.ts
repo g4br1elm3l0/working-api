@@ -17,14 +17,10 @@ export const listWorkerService = async () => {
             }
         },
     })
-
-    if(workerServicesList.length === 0){
+    
+    if(!workerServicesList.length){
         throw new AppError("Not found worker services", 404);
-
     }
-
-    const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerServicesList, {
-        stripUnknown: true
-    });
+    
     return workerServicesList;
 }
