@@ -1,8 +1,6 @@
 import dataSource from "../../data-source";
 import WorkerServices from "../../Entities/workerServices.entity";
-import { usersWithoutPasswordSerializer } from "../../Serializers/users.serializers";
 import { listWorkerServiceReturnSerializer } from "../../Serializers/workerServices.serializers";
-
 
 export const listWorkerService = async () => {
 

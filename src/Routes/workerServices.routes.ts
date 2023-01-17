@@ -12,6 +12,6 @@ const workerServicesRoutes = Router()
 
 workerServicesRoutes.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersServicesController)
 workerServicesRoutes.post('', ensureAuthMiddleware, ensureIsWorker, ensureIsValidDataMiddleware(workerServiceSerializer), createWorkersServicesController)
-workerServicesRoutes.get('/:id', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(WorkerServices), retrieveWorkersServicesController)
+workerServicesRoutes.get('/:id', ensureAuthMiddleware, ensureIsAdmMiddleware, retrieveWorkersServicesController)
 
 export default workerServicesRoutes

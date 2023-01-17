@@ -1,6 +1,9 @@
 import dataSource from "../../data-source";
 import WorkerServices from "../../Entities/workerServices.entity";
+import AppError from "../../errors";
+import { IWorkerServiceCreateReturn } from "../../Interfaces/WorkerServices";
 import { usersWithoutPasswordSerializer } from "../../Serializers/users.serializers";
+import { listWorkerServiceReturnSerializer, uniqueWorkerServiceReturnSerializer } from "../../Serializers/workerServices.serializers";
 
 export const retrieveWorkerService = async (id:string) => {
     const workerRepository = dataSource.getRepository(WorkerServices);
@@ -12,8 +15,13 @@ export const retrieveWorkerService = async (id:string) => {
             id
         },
     })
-    const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerService, {
+
+    if (!workerService){
+        throw new AppError("Worker service not found", 404)
+    }
+
+    const correctUsersFormat = listWorkerServiceReturnSerializer.validate(workerService, {
         stripUnknown: true
     });
-    return workerService;
+    return correctUsersFormat;
 }
