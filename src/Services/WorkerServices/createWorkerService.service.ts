@@ -19,10 +19,6 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
         throw new AppError("User was Not Found", 404);
     }
 
-    if (!userReq.isWorker){
-        throw new AppError("Needs to be a worker account.", 403);
-    }
-
     const searchUserService = await userServicesRepository.findOneBy({id: userServiceId});
     if (!searchUserService){
         throw new AppError("User Service was Not Found", 404);
