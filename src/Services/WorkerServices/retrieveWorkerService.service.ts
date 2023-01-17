@@ -1,7 +1,7 @@
 import dataSource from "../../data-source";
 import WorkerServices from "../../Entities/workerServices.entity";
 import AppError from "../../errors";
-import { usersWithoutPasswordSerializer } from "../../Serializers/users.serializers";
+
 
 export const retrieveWorkerService = async (id:string) => {
     const workerRepository = dataSource.getRepository(WorkerServices);
@@ -19,8 +19,5 @@ export const retrieveWorkerService = async (id:string) => {
 
     }
 
-    // const correctUsersFormat = usersWithoutPasswordSerializer.validate(workerService, {
-    //     stripUnknown: true
-    // });
     return workerService;
 }

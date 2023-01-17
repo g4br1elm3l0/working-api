@@ -4,10 +4,9 @@ import { IUserService } from "../../Interfaces/UserServices";
 
 
 export const listUserServicesbyUserIdService = async (userId: string): Promise<IUserService[]> => {
-
     const userServicesRepository = dataSource.getRepository(UserServices);
 
-     const SearchUserServiceByUserId = await userServicesRepository.find({
+    const SearchUserServiceByUserId = await userServicesRepository.find({
         where: {
             user: {
                 id: userId
@@ -17,7 +16,7 @@ export const listUserServicesbyUserIdService = async (userId: string): Promise<I
             category: true,
             location: true
         }     
-    });
+    });    
 
     return SearchUserServiceByUserId;
 }

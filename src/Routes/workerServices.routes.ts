@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createWorkersServicesController, deleteWorkerServiceController, listWorkersServicesController, retrieveWorkersServicesController } from "../Controllers/workerServices.controllers";
 import Users from "../Entities/users.entity";
-import WorkerServices from "../Entities/workerServices.entity";
+
 import ensureAuthMiddleware from "../Middlewares/ensureAuth.middleware";
 import ensureIsAdmMiddleware from "../Middlewares/ensureIsAdm.middleware";
 import ensureIsValidDataMiddleware from "../Middlewares/ensureIsValidData.middleware";
