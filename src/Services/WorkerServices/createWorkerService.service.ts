@@ -2,36 +2,25 @@ import dataSource from "../../data-source";
 import UserServices from "../../Entities/userServices.entity";
 import WorkerServices from "../../Entities/workerServices.entity";
 import AppError from "../../errors";
-import { IWorkerServiceRequest } from "../../Interfaces/WorkerServices";
 import Users from './../../Entities/users.entity';
+import { IReqUser } from "../../Interfaces/Session";
 
-export const createWorkerService = async (userData: IWorkerServiceRequest) => {
+export const createWorkerService = async (userServiceId: string, userReq:IReqUser) => {
     const workerServiceRepository = dataSource.getRepository(WorkerServices);
     const userServicesRepository = dataSource.getRepository(UserServices)
     const userRepository = dataSource.getRepository(Users)
     
-    const searchUser = await userRepository.findOneBy({id: userData.userId});
-    if (!searchUser){
-        throw new AppError("User was Not Found", 404);
-    }
+    const searchUser = await userRepository.findOneBy({id: userReq.id});
 
-    const searchUserService = await userServicesRepository.findOneBy({id: userData.userServiceId});
+    const searchUserService = await userServicesRepository.findOneBy({id: userServiceId});
     if (!searchUserService){
         throw new AppError("User Service was Not Found", 404);
     };
 
-    searchUserService.status = "aceito"
-
-    await userServicesRepository.save(searchUserService)
-
-    const workerService = workerServiceRepository.create(userData);
-
-    workerService.user = searchUser;
-    workerService.userService = searchUserService;
     const searchWorkerServiceByUserService = await workerServiceRepository.findOne({
         where: {
             userService: {
-                id: userData.userServiceId
+                id: userServiceId
             }
         }
     })
@@ -39,11 +28,11 @@ export const createWorkerService = async (userData: IWorkerServiceRequest) => {
         throw new AppError("This User Service already was accepted", 409)
     }
 
-    const workerServiceWithRelations = {
+    const workerService = {
         user: searchUser,
         userService: searchUserService
     }
-    const createdWorkerService = await workerServiceRepository.save(workerServiceWithRelations)
+    const createdWorkerService = await workerServiceRepository.save(workerService)
     
     const {password, ...userWithoutPassword} = createdWorkerService.user
     const {user, ...serviceWithoutUser} = createdWorkerService

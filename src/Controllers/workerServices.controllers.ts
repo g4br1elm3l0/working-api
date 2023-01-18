@@ -11,7 +11,8 @@ export const listWorkersServicesController = async (req: Request, res: Response)
 }
 
 export const createWorkersServicesController = async (req: Request, res: Response) => {
-    const users = await createWorkerService(req.body)
+    const userServiceId: string = req.params.id
+    const users = await createWorkerService(userServiceId, req.user)
     return res.status(201).json(users)
 }
 

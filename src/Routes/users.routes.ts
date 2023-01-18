@@ -28,11 +28,12 @@ import {
     UserServicesbyUserIdController 
 } from "../Controllers/userServices.controllers";
 import { userServiceSerializer } from "../Serializers/userService.serializers";
+import ensureIsNotWorker from "../Middlewares/ensureIsNotWorker.middleware";
 
 const userRouter = Router();
 
 userRouter.post('', ensureIsValidDataMiddleware(requestUsersSerializer), createUserController)  // criar usuários
-userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(userServiceSerializer), createUserServiceController) // criar serviços do usuário
+userRouter.post('/services', ensureAuthMiddleware, ensureIsValidDataMiddleware(userServiceSerializer), ensureIsNotWorker, createUserServiceController) // criar serviços do usuário
 
 userRouter.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listUsersController) // listar todos os usuários não trabalhadores (apenas administradores)
 userRouter.get('/workers', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersController) // listar todos os trabalhadores (apenas administradores)
