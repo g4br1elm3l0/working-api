@@ -55,3 +55,32 @@ export interface IWorkerServiceCreateReturn {
 
     }
 }
+
+export interface IUserListReturn {
+        id: string
+        name: string
+        email: string
+        gender: string
+        birthday: string
+        profileImg: string
+        telephone: string
+        isActive: boolean
+        isWorker: boolean
+        isAdm: boolean
+        createdAt: string
+        updatedAt: string
+        deletedAt: string | null
+
+    services: {
+        id: string
+        title: string
+        description: string
+        femaleOnly: boolean
+        status: string
+        createdAt: string
+        updatedAt: string 
+        deletedAt: string | null
+
+
+    }
+}
