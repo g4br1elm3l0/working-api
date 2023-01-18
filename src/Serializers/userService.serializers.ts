@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { IUserServiceRequest, IUserServiceResponse } from "../Interfaces/UserServices";
+import { IUserServiceRequest, IUserServiceResponse, IUserServiceUpdateRequest } from "../Interfaces/UserServices";
 
 export const userServiceSerializer: SchemaOf<IUserServiceRequest> = yup.object().shape({
     title: yup.string().max(50).required(),
@@ -40,3 +40,14 @@ export const oneUserServiceResponseSerializer: SchemaOf<IUserServiceResponse> = 
 });
 
 export const userServicesResponseSerializer: SchemaOf<IUserServiceResponse[]> = yup.array(oneUserServiceResponseSerializer);
+
+export const userServiceUpdateSerializer: SchemaOf<IUserServiceUpdateRequest> = yup.object().shape({
+    title: yup.string().notRequired(),
+    description: yup.string().notRequired(),
+    femaleOnly: yup.boolean().notRequired(),
+    category: yup.string().notRequired(),
+    location: yup.object({
+        latitude: yup.number().required(),
+        longitude: yup.number().required()
+    }).notRequired()
+});

@@ -1,4 +1,4 @@
-import { IUserServiceRequest } from "../../../Interfaces/UserServices/index";
+import { IUserServiceRequest, IUserServiceUpdateRequest } from "../../../Interfaces/UserServices/index";
 
 export const mockedService1 : IUserServiceRequest = {
     title: "Meu celular caiu na piscina",
@@ -20,7 +20,7 @@ export const mockedService2 : IUserServiceRequest = {
     }
 };
 
-export const mockedUpdateService1 = {
+export const mockedUpdateService1 : IUserServiceUpdateRequest = {
     title: "Meu celular caiu na piscina atualizado",
     description: "Me empurraram e acabei caindo na piscina. Ele não quis ligar atualizado"
 };

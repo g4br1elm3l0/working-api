@@ -19,7 +19,7 @@ describe("/users", () => {
 
     test("POST /users - Must be able to create user", async () => {
         const response = await request(app).post("/users").send(mockedUser);
-
+        
         expect(response.body).toHaveProperty("id");;
         expect(response.body).toHaveProperty("name");
         expect(response.body).toHaveProperty("email");

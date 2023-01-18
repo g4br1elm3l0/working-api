@@ -151,8 +151,7 @@ describe("/services", () => {
     test("GET users/:userId/services - Should not be able to list a service with invalid id", async () => {
         const loginResponse = await request(app).post("/login").send(mockedUserAdmLogin);
         const response = await request(app).get(`/users/123456789/services`).set("Authorization", `Bearer ${loginResponse.body.token}`);
-        console.log('test: ', response.body);
-        
+                
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(404);
     });
@@ -165,8 +164,10 @@ describe("/services", () => {
         await request(app).post("/users/services").send(mockedService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
         
         const findService = await request(app).get(`/users/${findUser.body[0].id}/services`).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+        console.log(findService.body);
         
         const response = await request(app).patch(`/users/${findUser.body[0].id}/services/${findService.body[0].id}`).send(mockedUpdateService1).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
+        console.log(response.body);
         
         expect(response.body).toHaveProperty("id");
         expect(response.body).toHaveProperty("title");

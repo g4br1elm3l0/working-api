@@ -3,7 +3,7 @@ import { IUserLogin, IUserRequest, IUserUpdate } from "../../../Interfaces/Users
 export const mockedUser : IUserRequest = {
     name: "leonardo",
     email: "leonardo@mail.com",
-    password: "leo1234",
+    password: "leoLEO123*#",
     gender: "masculino",
     birthday: "02/07/01",
     profileImg: "profileleo",
@@ -14,7 +14,7 @@ export const mockedUser : IUserRequest = {
 export const mockedUserAdm : IUserRequest = {
     name: "leonardo adm",
     email: "leonardoadm@mail.com.br",
-    password: "leo1234",
+    password: "leoLEO123*#",
     gender: "masculino",
     birthday: "04/07/01",
     profileImg: "profileleo",
@@ -26,7 +26,7 @@ export const mockedUserAdm : IUserRequest = {
 export const mockedUserWorker : IUserRequest = {
     name: "Leonardo 123",
     email: "leonardo.123@mail.com",
-    password: "leo1234",
+    password: "leoLEO123*#",
     gender: "masculino",
     birthday: "03/07/01",
     profileImg: "profileleo",
@@ -37,7 +37,7 @@ export const mockedUserWorker : IUserRequest = {
 export const mockedUserAdmWorker : IUserRequest = {
     name: "leonardo adm",
     email: "leonardoadmworker@mail.com.br",
-    password: "leo1234",
+    password: "leoLEO123*#",
     gender: "masculino",
     birthday: "04/07/01",
     profileImg: "profileleo",
@@ -48,22 +48,22 @@ export const mockedUserAdmWorker : IUserRequest = {
 
 export const mockedUserLogin : IUserLogin = {
     email: "leonardo@mail.com",
-    password: "leo1234"
+    password: "leoLEO123*#"
 };
 
 export const mockedUserAdmLogin : IUserLogin = {
     email: "leonardoadm@mail.com.br",
-    password: "leo1234"
+    password: "leoLEO123*#"
 };
 
 export const mockedUserWorkerLogin : IUserLogin = {
     email: "leonardo.123@mail.com",
-    password: "leo1234"
+    password: "leoLEO123*#"
 };
 
 export const mockedUserAdmWorkerLogin : IUserLogin = {
     email: "leonardoadmworker@mail.com.br",
-    password: "leo1234"
+    password: "leoLEO123*#"
 };
 
 export const mokedUserUpdate : IUserUpdate = {

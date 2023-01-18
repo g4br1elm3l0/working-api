@@ -4,6 +4,8 @@ import dataSource from "../data-source";
 import AppError from "../errors";
 
 export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, entity2: EntityTarget<ObjectLiteral> = entity1) => async (req: Request, res: Response, next: NextFunction) => {
+    console.log('Chegou aqui no ensureIsValidIdMiddleware');
+    
     const { params } = req;
 
     if( !params.userId && !params.servicesId ) {

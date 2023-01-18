@@ -5,7 +5,8 @@ import { oneUserServiceResponseSerializer } from '../../Serializers/userService.
 import { IUserServiceUpdateRequest } from '../../Interfaces/UserServices'
 
 const updateServiceService = async (userData: IUserServiceUpdateRequest, userId: string) => {
-
+    console.log('updateServiceService: ', userData);
+    
     const serviceRepository = AppDataSource.getRepository(UserServices)
 
     const findService = await serviceRepository.find({
@@ -20,11 +21,14 @@ const updateServiceService = async (userData: IUserServiceUpdateRequest, userId:
             location: true
         }     
     });
-
+    // console.log('updateServiceService: ', findService);
+    
     const updatedService = serviceRepository.create({
         ...findService,
         ...userData
     })
+    // console.log('updateServiceService: ', updatedService);
+    
     await serviceRepository.save(updatedService)
 
     const validatedService = await oneUserServiceResponseSerializer.validate(updatedService, {
