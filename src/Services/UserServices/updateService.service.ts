@@ -32,7 +32,6 @@ const updateServiceService = async (userData: IUserServiceUpdateRequest, userId:
     })
 
     return validatedService
-
 }
 
 export default updateServiceService

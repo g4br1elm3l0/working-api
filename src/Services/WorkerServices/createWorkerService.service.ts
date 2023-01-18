@@ -3,7 +3,6 @@ import UserServices from "../../Entities/userServices.entity";
 import WorkerServices from "../../Entities/workerServices.entity";
 import AppError from "../../errors";
 import { IWorkerServiceRequest } from "../../Interfaces/WorkerServices";
-import { responseUsersSerializer } from "../../Serializers/users.serializers";
 import Users from './../../Entities/users.entity';
 
 export const createWorkerService = async (userData: IWorkerServiceRequest) => {

@@ -1,4 +1,5 @@
 export interface IWorkerServiceRequest {
     userId: string
-    userServiceId: string    
+    userServiceId: string
+    acceptedAt?: Date 
 }
