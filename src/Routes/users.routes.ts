@@ -26,7 +26,7 @@ import {
     listServiceByIdController, 
     updateServiceController, 
     UserServicesbyUserIdController 
-} from "../Controllers/jobs.controllers";
+} from "../Controllers/userServices.controllers";
 import { userServiceSerializer } from "../Serializers/userService.serializers";
 
 const userRouter = Router();
