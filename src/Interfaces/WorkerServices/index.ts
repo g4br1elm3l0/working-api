@@ -28,6 +28,20 @@ export interface IWorkerServiceListReturn {
     }
 }
 
+export interface IWorkerServiceResponse {
+    id: string
+    acceptedAt: string | null
+    userService: {
+        id: string
+        title: string
+        description: string
+        femaleOnly: boolean
+        status: string
+        createdAt: string
+        updatedAt: string 
+    }
+}
+
 export interface IWorkerServiceCreateReturn {
     user: {
         id: string

@@ -210,4 +210,68 @@ describe("/worker-services", () => {
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(401);
     });
+
+    test("GET /worker-services/worker/:userId - Must be able to list services of worker", async () => {
+        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        const workers = await request(app).get("/users/workers").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
+        const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
+        
+        const response = await request(app).get(`/worker-services/worker/${workers.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+        
+        expect(response.body[0]).toHaveProperty("id");
+        expect(response.body[0]).toHaveProperty("acceptedAt");
+        expect(response.body[0]).toHaveProperty("userService");
+
+        expect(response.body[0].userService).toHaveProperty("id");
+        expect(response.body[0].userService).toHaveProperty("title");
+        expect(response.body[0].userService).toHaveProperty("description");
+        expect(response.body[0].userService).toHaveProperty("femaleOnly");
+        expect(response.body[0].userService).toHaveProperty("status");
+
+        expect(response.status).toBe(200);
+    });
+
+    test("GET /worker-services/worker/:userId - Must not be able to list services of worker without authentication", async () => {
+        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        const workers = await request(app).get("/users/workers").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
+        const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
+        
+        const response = await request(app).get(`/worker-services/worker/${workers.body[0].id}`);
+        
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(401);
+    });
+    
+    test("DELETE /worker-services/:userId - It must be possible to delete a worker service.", async () => {
+        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        const users = await request(app).get("/users/workers").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
+        const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
+        const services = await request(app).get(`/worker-services/worker/${users.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+                
+        const response = await request(app).delete(`/worker-services/${services.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+        
+        const deletedWorkerService = await request(app).get(`/worker-services/${services.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+                
+        expect(deletedWorkerService.body[0]).toHaveProperty("userService");
+        expect(deletedWorkerService.body[0].userService).toHaveProperty("status");
+        expect(deletedWorkerService.body[0].userService.status).toEqual("pendente");
+        
+        expect(response.status).toBe(204);
+    });
+
+    test("DELETE /worker-services/:userId - It must not be possible to delete a worker service without authentication.", async () => {
+        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
+        const users = await request(app).get("/users/workers").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
+        
+        const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
+        const services = await request(app).get(`/worker-services/worker/${users.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+        
+        const response = await request(app).delete(`/worker-services/${services.body[0].id}`);
+
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(401); 
+    });
 });

@@ -15,8 +15,8 @@ workerServicesRoutes.post('/:userId', ensureAuthMiddleware, ensureIsValidIdMiddl
 
 workerServicesRoutes.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersServicesController)
 workerServicesRoutes.get('/:userId', ensureAuthMiddleware, ensureIsValidIdMiddleware(WorkerServices), retrieveWorkersServicesController)
-workerServicesRoutes.get('/worker/:userId', ensureAuthMiddleware, ensureIsWorker, ensureIsValidIdMiddleware(Users), listWorkerServicesController)
+workerServicesRoutes.get('/worker/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsWorker, ensureIsValidIdMiddleware(Users), listWorkerServicesController)
 
-workerServicesRoutes.delete('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(WorkerServices), deleteWorkerServiceController )
+workerServicesRoutes.delete('/:userId', ensureAuthMiddleware, ensureIsValidIdMiddleware(WorkerServices), deleteWorkerServiceController )
 
 export default workerServicesRoutes

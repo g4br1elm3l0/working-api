@@ -1,6 +1,6 @@
 import * as yup from "yup"
 import { SchemaOf } from "yup";
-import { IUserListReturn, IWorkerServiceCreateReturn, IWorkerServiceListReturn } from "../Interfaces/WorkerServices";
+import { IUserListReturn, IWorkerServiceCreateReturn, IWorkerServiceListReturn, IWorkerServiceResponse } from "../Interfaces/WorkerServices";
 
 export const createWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceCreateReturn> = yup.object().shape({
     user: yup.object().shape({
@@ -64,6 +64,20 @@ export const uniqueWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceListRet
     
 }); 
 
+export const listServicesOfWorkerSerializer: SchemaOf<IWorkerServiceResponse> = yup.object().shape({
+    id: yup.string().required(),
+    acceptedAt: yup.string().required().nullable(),
+    userService: yup.object().shape({
+        id: yup.string().required(),
+        title: yup.string().required(),
+        description: yup.string().required(),
+        femaleOnly: yup.boolean().required(),
+        status: yup.string().required(),
+        createdAt: yup.string().required(),
+        updatedAt: yup.string().required()
+    })
+});
+
 export const listAnUserSerializer: SchemaOf<IUserListReturn> = yup.object().shape({
 
         id: yup.string().required(),
@@ -95,6 +109,8 @@ export const listAnUserSerializer: SchemaOf<IUserListReturn> = yup.object().shap
 }); 
 
 export const listWorkerServiceReturnSerializer = yup.array(uniqueWorkerServiceReturnSerializer)
+
+export const listServicesOfWorkerResponseSerializer = yup.array(listServicesOfWorkerSerializer)
 
 
 

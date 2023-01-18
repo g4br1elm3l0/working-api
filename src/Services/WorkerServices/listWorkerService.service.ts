@@ -1,8 +1,9 @@
 import dataSource from "../../data-source";
 import WorkerServices from "../../Entities/workerServices.entity";
-import { listWorkerServiceReturnSerializer } from "../../Serializers/workerServices.serializers";
+import { IWorkerServiceResponse } from "../../Interfaces/WorkerServices";
+import { listServicesOfWorkerResponseSerializer } from "../../Serializers/workerServices.serializers";
 
-export const listWorkerService = async (workerServiceId: string) => {
+export const listWorkerService = async (workerServiceId: string): Promise<IWorkerServiceResponse[]> => {
 
     const workerRepository = dataSource.getRepository(WorkerServices);
     const workerServicesList = await workerRepository.find({
@@ -12,13 +13,12 @@ export const listWorkerService = async (workerServiceId: string) => {
             }
         },
         relations: {
-            user: true, userService: true
+            userService: true
         },
         withDeleted: true
     })
-    console.log(workerServiceId, workerServicesList)
 
-    const correctUsersFormat = listWorkerServiceReturnSerializer.validate(workerServicesList, {
+    const correctUsersFormat = listServicesOfWorkerResponseSerializer.validate(workerServicesList, {
         stripUnknown: true
     });
     
