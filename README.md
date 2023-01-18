@@ -19,6 +19,7 @@
 <div align="center">
   <img alt="GitHub Stats" width="45%" margin_right="10%" src="https://github-readme-stats-rho-vert.vercel.app/api?username=g4br1elm3l0&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" />
     <img alt="GitHub Stats" width="45%" margin_right="10%" src="https://github-readme-stats-rho-vert.vercel.app/api?username=miranda-Leonardo&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" />
+        <img alt="GitHub Stats" width="45%" margin_right="10%" src="https://github-readme-stats-rho-vert.vercel.app/api?username=filipelucena1&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" />
     <img alt="GitHub Stats" width="45%" margin_right="10%" src="https://github-readme-stats-rho-vert.vercel.app/api?username=eduardohenri22&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" />
         <img alt="GitHub Stats" width="45%" margin_right="10%" src="https://github-readme-stats-rho-vert.vercel.app/api?username=joabeconrado19&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" />
 	    <img alt="GitHub Stats" width="45%" margin_right="10%" src="https://github-readme-stats-rho-vert.vercel.app/api?username=anibalmoraes&show_icons=true&theme=dracula&include_all_commits=true&count_private=true" />
