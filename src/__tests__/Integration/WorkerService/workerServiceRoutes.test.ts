@@ -27,27 +27,45 @@ describe("/worker-services", () => {
         
         await request(app).post("/users").send(mockedUserAdm);
         const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
-        const users = await request(app).get("/users/workers").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
         
         const data = {
-            userId: users.body[0].id,
             userServiceId: service.body.id,
             acceptedAt: "17.01.23"
         };
         
         const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
 
-        const response = await request(app).post(`/worker-services/${users.body[0].id}`).send(data).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+        const response = await request(app).post(`/worker-services/${service.body.id}`).send(data).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
         
         expect(response.body).toHaveProperty("id");
         expect(response.body).toHaveProperty("acceptedAt");
-        expect(response.body).toHaveProperty("user");
         expect(response.body).toHaveProperty("userService");
         expect(response.body).toHaveProperty("worker");
 
+        expect(response.body.userService).toHaveProperty("location");
+        expect(response.body.userService).toHaveProperty("category");
+        expect(response.body.userService).toHaveProperty("user");
+        expect(response.body.userService).toHaveProperty("createdAt");
+        expect(response.body.userService).toHaveProperty("status");
+        expect(response.body.userService).toHaveProperty("description");
+        expect(response.body.userService).toHaveProperty("title");
+        expect(response.body.userService).toHaveProperty("id");
+
+        expect(response.body.worker).toHaveProperty("isActive");
+        expect(response.body.worker).toHaveProperty("isWorker");
+        expect(response.body.worker).toHaveProperty("deletedAt");
+
+        expect(response.body.deletedAt).toEqual(null);
         expect(response.body.acceptedAt).not.toEqual(null);
-        expect(response.body.user).not.toHaveProperty("password");
+
+        expect(response.body.userService.user).not.toHaveProperty("password");
+        expect(response.body.userService.createdAt).not.toEqual(null);
+        expect(response.body.userService.status).toEqual("aceito");
+
         expect(response.body.worker).not.toHaveProperty("password");
+        expect(response.body.worker.isActive).toEqual(true);
+        expect(response.body.worker.isWorker).toEqual(true);
+        expect(response.body.worker.deletedAt).toEqual(null);
 
         expect(response.status).toBe(201);
     });
@@ -110,13 +128,23 @@ describe("/worker-services", () => {
         expect(response.body[0]).toHaveProperty("user");
         expect(response.body[0]).toHaveProperty("userService");
 
-        expect(response.body[0].user).not.toHaveProperty("password");
+        expect(response.body[0].userService).toHaveProperty("id");
+        expect(response.body[0].userService).toHaveProperty("title");
+        expect(response.body[0].userService).toHaveProperty("description");
         expect(response.body[0].userService).toHaveProperty("status");
-        expect(response.body[0].userService).toHaveProperty("deletedAt");
+        expect(response.body[0].userService).toHaveProperty("femaleOnly");
         
-        expect(response.body[0].acceptedAt).toEqual(null);
-        expect(response.body[0].userService.status).toEqual("pendente");
-        expect(response.body[0].userService.deletedAt).toEqual(null);
+        expect(response.body[0].userService.status).toEqual("aceito");
+
+        expect(response.body[0].user).not.toHaveProperty("password");
+        expect(response.body[0].user).toHaveProperty("id");
+        expect(response.body[0].user).toHaveProperty("name");
+        expect(response.body[0].user).toHaveProperty("email");
+        expect(response.body[0].user).toHaveProperty("telephone");
+        expect(response.body[0].user).toHaveProperty("isWorker");
+        expect(response.body[0].user).toHaveProperty("isActive");
+        
+        expect(response.body[0].acceptedAt).not.toEqual(null);
 
         expect(response.status).toBe(200);
     });
@@ -138,28 +166,47 @@ describe("/worker-services", () => {
     });
 
     test("GET /worker-services/:userId - Must be able to list a service", async () => {
-        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
-        const users = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-        const response = await request(app).get(`/worker-services/${users.body[0].id}`).set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-
-        expect(response.body).toHaveProperty("id");
-        expect(response.body).toHaveProperty("acceptedAt");
-        expect(response.body).toHaveProperty("user");
-        expect(response.body).toHaveProperty("userService");
+        const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
+        const services = await request(app).get("/users/services").set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
         
-        expect(response.body.userService).toHaveProperty("status");
+        const myService = await request(app).post(`/worker-services/${services.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
 
-        expect(response.body.user).not.toHaveProperty("password");
-        expect(response.body.userService.status).toEqual("pendente");
+        const response = await request(app).get(`/worker-services/${myService.body.id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+        
+        expect(response.body[0]).toHaveProperty("id");
+        expect(response.body[0]).toHaveProperty("acceptedAt");
+        expect(response.body[0]).toHaveProperty("user");
+        expect(response.body[0]).toHaveProperty("userService");
+
+        expect(response.body[0].userService).toHaveProperty("id");
+        expect(response.body[0].userService).toHaveProperty("title");
+        expect(response.body[0].userService).toHaveProperty("description");
+        expect(response.body[0].userService).toHaveProperty("status");
+        expect(response.body[0].userService).toHaveProperty("femaleOnly");
+        
+        expect(response.body[0].userService.status).toEqual("aceito");
+
+        expect(response.body[0].user).not.toHaveProperty("password");
+        expect(response.body[0].user).toHaveProperty("id");
+        expect(response.body[0].user).toHaveProperty("name");
+        expect(response.body[0].user).toHaveProperty("email");
+        expect(response.body[0].user).toHaveProperty("telephone");
+        expect(response.body[0].user).toHaveProperty("isWorker");
+        expect(response.body[0].user).toHaveProperty("isActive");
+        
+        expect(response.body[0].acceptedAt).not.toEqual(null);
 
         expect(response.status).toBe(200);
     });
 
     test("GET /worker-services/:userId - Must not be able to list a service without authentication", async () => {
-        const loginAdmResponse = await request(app).post("/login").send(mockedUserAdmLogin);
-        const users = await request(app).get("/users").set("Authorization", `Bearer ${loginAdmResponse.body.token}`);
-        const response = await request(app).get(`/worker-services/${users.body[0].id}`);
+        const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
+        const services = await request(app).get("/users/services").set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
+        
+        const myService = await request(app).post(`/worker-services/${services.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
 
+        const response = await request(app).get(`/worker-services/${myService.body.id}`);
+        
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(401);
     });

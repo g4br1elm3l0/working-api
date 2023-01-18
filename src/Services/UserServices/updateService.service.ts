@@ -1,41 +1,58 @@
 
-import UserServices from '../../Entities/userServices.entity'
-import AppDataSource from '../../data-source'
-import { oneUserServiceResponseSerializer } from '../../Serializers/userService.serializers'
-import { IUserServiceUpdateRequest } from '../../Interfaces/UserServices'
+import UserServices from '../../Entities/userServices.entity';
+import { oneUserServiceResponseSerializer } from '../../Serializers/userService.serializers';
+import { IUserServiceUpdateRequest } from '../../Interfaces/UserServices';
+import Categories from '../../Entities/categories.entity';
+import dataSource from '../../data-source';
+import Location from '../../Entities/locations.entity';
 
-const updateServiceService = async (userData: IUserServiceUpdateRequest, userId: string) => {
-    console.log('updateServiceService: ', userData);
-    
-    const serviceRepository = AppDataSource.getRepository(UserServices)
+const updateServiceService = async (userData: IUserServiceUpdateRequest, serviceId: string) => {
+    const serviceRepository = dataSource.getRepository(UserServices);
 
-    const findService = await serviceRepository.find({
+    const findService = await serviceRepository.findOne({
         where: {
-            user: {
-                id: userId
-            }
+            id: serviceId
         },
         relations: {
             user: true,
             category: true,
             location: true
-        }     
+        }   
     });
-    // console.log('updateServiceService: ', findService);
+
+    const { category, location, ...data } = userData;
     
-    const updatedService = serviceRepository.create({
+    if(category){
+        const categoriesRepository = dataSource.getRepository(Categories);
+        let searchCategory = await categoriesRepository.findOneBy({ name: category.toLowerCase() });
+        if (!searchCategory) {
+            const newCategory = categoriesRepository.create({ name: category.toLowerCase() });
+            searchCategory = await categoriesRepository.save(newCategory);
+        };
+        findService.category = searchCategory;
+    }
+
+    if(location.latitude && location.longitude){
+        const locationRepository = dataSource.getRepository(Location);
+        let searchLocation = await locationRepository.findOneBy({ latitude: location.latitude, longitude: location.longitude });
+        if (!searchLocation) {
+            const newLocation = locationRepository.create({ latitude: location.latitude, longitude: location.longitude });
+            searchLocation = await locationRepository.save(newLocation);
+        };
+        findService.location = searchLocation;
+    };
+    
+    const newService = {
         ...findService,
-        ...userData
-    })
-    // console.log('updateServiceService: ', updatedService);
-    
-    await serviceRepository.save(updatedService)
+        ...data
+    };
+    await serviceRepository.save(newService);
 
-    const validatedService = await oneUserServiceResponseSerializer.validate(updatedService, {
+    const validatedService = await oneUserServiceResponseSerializer.validate(newService, {
         stripUnknown: true
-    })
+    });
+    
+    return validatedService;
+};
 
-    return validatedService
-}
-
-export default updateServiceService
+export default updateServiceService;

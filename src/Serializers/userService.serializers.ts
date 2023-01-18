@@ -47,7 +47,7 @@ export const userServiceUpdateSerializer: SchemaOf<IUserServiceUpdateRequest> = 
     femaleOnly: yup.boolean().notRequired(),
     category: yup.string().notRequired(),
     location: yup.object({
-        latitude: yup.number().required(),
-        longitude: yup.number().required()
+        latitude: yup.number().notRequired(),
+        longitude: yup.number().notRequired()
     }).notRequired()
 });

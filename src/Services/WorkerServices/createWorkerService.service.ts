@@ -33,7 +33,7 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
             }
         }
     })
-    console.log(userServiceId, searchWorkerServiceByUserService)
+    
     if (searchWorkerServiceByUserService){
         throw new AppError("This User Service already was accepted", 409)
     }
@@ -45,8 +45,6 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
         stripUnknown: true
     })
 
-    console.log(newSearchUserService)
-
     const workerService = {
         user: searchUser,
         userService: searchUserService
@@ -55,6 +53,7 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
     
     const {password, ...userWithoutPassword} = createdWorkerService.user
     const {user, ...serviceWithoutUser} = createdWorkerService
+    
     return {
         ...serviceWithoutUser,
         userService: {...newSearchUserService},

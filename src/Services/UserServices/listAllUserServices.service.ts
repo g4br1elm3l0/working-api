@@ -17,9 +17,9 @@ export const listAllUserServicesService = async (): Promise<IUserServiceResponse
         }
     });
 
-    const correctUserServicesFormat = userServicesResponseSerializer.validate(userServices, {
+    const correctUserServicesFormat = await userServicesResponseSerializer.validate(userServices, {
         stripUnknown: true
-    })
+    })    
 
     return correctUserServicesFormat;
 };

@@ -21,5 +21,6 @@ export const listWorkerService = async (workerServiceId: string) => {
     const correctUsersFormat = listWorkerServiceReturnSerializer.validate(workerServicesList, {
         stripUnknown: true
     });
+    
     return correctUsersFormat;
 }

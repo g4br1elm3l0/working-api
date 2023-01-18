@@ -8,7 +8,7 @@ const ensureIsValidDataMiddleware = (schema: AnySchema) => async (req: Request, 
             abortEarly: false,
             stripUnknown: true
         });
-    
+        
         req.body = validatedData;
         
         return next();

@@ -111,7 +111,7 @@ describe("/users", () => {
         const loginUserResponse = await request(app).post("/login").send(mockedUserLogin);
         
         const response = await request(app).patch(`/users/${findUser.body[0].id}`).send(mokedUserUpdate).set("Authorization", `Bearer ${loginUserResponse.body.token}`);
-
+        
         expect(response.body).toHaveProperty("id");;
         expect(response.body).toHaveProperty("name");
         expect(response.body).toHaveProperty("email");
@@ -270,7 +270,6 @@ describe("/users", () => {
         const loginResponse = await request(app).post("/login").send(mockedUserAdmWorker);    
         
         const response = await request(app).delete("/users/13970660-5dbe-423a-9a9d-5c23b37943cf").set("Authorization", `Bearer ${loginResponse.body.token}`);
-        console.log('Aqui: ', response.body);
         
         expect(response.body).toHaveProperty("message");
         expect(response.status).toBe(404);
