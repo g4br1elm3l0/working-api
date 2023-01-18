@@ -1,6 +1,6 @@
 import * as yup from "yup"
 import { SchemaOf } from "yup";
-import { IWorkerServiceCreateReturn, IWorkerServiceListReturn } from "../Interfaces/WorkerServices";
+import { IUserListReturn, IWorkerServiceCreateReturn, IWorkerServiceListReturn } from "../Interfaces/WorkerServices";
 
 export const createWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceCreateReturn> = yup.object().shape({
     user: yup.object().shape({
@@ -59,6 +59,36 @@ export const uniqueWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceListRet
         status: yup.string().required(),
         createdAt: yup.string().required(),
         updatedAt: yup.string().required()
+
+    })
+    
+}); 
+
+export const listAnUserSerializer: SchemaOf<IUserListReturn> = yup.object().shape({
+
+        id: yup.string().required(),
+        name: yup.string().required(),
+        email: yup.string().required(),
+        gender: yup.string().required(),
+        birthday: yup.string().required(),
+        profileImg: yup.string().required(),
+        telephone: yup.string().required(),
+        isActive: yup.boolean().required(),
+        isWorker: yup.boolean().required(),
+        isAdm: yup.boolean().required(),
+        createdAt: yup.string().required(),
+        updatedAt: yup.string().required(),
+        deletedAt: yup.string().nullable(),
+
+    services: yup.object().nullable().shape({
+        id: yup.string().required(),
+        title: yup.string().required(),
+        description: yup.string().required(),
+        femaleOnly: yup.boolean().required(),
+        status: yup.string().required(),
+        createdAt: yup.string().required(),
+        updatedAt: yup.string().required(),
+        deletedAt: yup.string().nullable()
 
     })
     
