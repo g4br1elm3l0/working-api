@@ -13,18 +13,24 @@ export const ensureIsValidIdMiddleware = (entity1: EntityTarget<ObjectLiteral>, 
     if(params.userId){
         const repo = dataSource.getRepository(entity1);
         
-        const searchDataOnRepo = await repo.findOneBy({ id: params.userId });
+        const searchDataOnRepo = await repo.findOne({
+            where: { id: params.userId },
+            withDeleted: true
+        });
         if (!searchDataOnRepo){
-            throw new AppError("id was not found user", 404);
+            throw new AppError("id was not found", 404);
         };
     }
 
     if(params.servicesId){
         const repo = dataSource.getRepository(entity2);
         
-        const searchDataOnRepo = await repo.findOneBy({ id: params.servicesId });    
+        const searchDataOnRepo = await repo.findOne({
+            where: { id: params.servicesId },
+            withDeleted: true
+        });  
         if (!searchDataOnRepo){
-            throw new AppError("id was not found service", 404);
+            throw new AppError("id was not found", 404);
         };
     }
 

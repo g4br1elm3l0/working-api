@@ -4,6 +4,7 @@ import WorkerServices from "../../Entities/workerServices.entity";
 import AppError from "../../errors";
 import Users from './../../Entities/users.entity';
 import { IReqUser } from "../../Interfaces/Session";
+import { oneUserServiceResponseSerializer } from "../../Serializers/userService.serializers";
 
 export const createWorkerService = async (userServiceId: string, userReq:IReqUser) => {
     const workerServiceRepository = dataSource.getRepository(WorkerServices);
@@ -12,7 +13,15 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
     
     const searchUser = await userRepository.findOneBy({id: userReq.id});
 
-    const searchUserService = await userServicesRepository.findOneBy({id: userServiceId});
+    const searchUserService = await userServicesRepository.findOne(
+        {
+            where: {id: userServiceId},
+            relations: {
+                user: true,
+                location: true,
+                category: true
+            }
+        });
     if (!searchUserService){
         throw new AppError("User Service was Not Found", 404);
     };
@@ -24,9 +33,19 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
             }
         }
     })
+    console.log(userServiceId, searchWorkerServiceByUserService)
     if (searchWorkerServiceByUserService){
         throw new AppError("This User Service already was accepted", 409)
     }
+
+    searchUserService.status = "aceito"
+    await userServicesRepository.save(searchUserService)
+
+    const newSearchUserService = await oneUserServiceResponseSerializer.validate(searchUserService, {
+        stripUnknown: true
+    })
+
+    console.log(newSearchUserService)
 
     const workerService = {
         user: searchUser,
@@ -38,6 +57,7 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
     const {user, ...serviceWithoutUser} = createdWorkerService
     return {
         ...serviceWithoutUser,
+        userService: {...newSearchUserService},
         worker: userWithoutPassword
     };
 }

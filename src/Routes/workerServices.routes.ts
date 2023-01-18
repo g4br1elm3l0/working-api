@@ -1,17 +1,22 @@
 import { Router } from "express";
-import { createWorkersServicesController, deleteWorkerServiceController, listWorkersServicesController, retrieveWorkersServicesController } from "../Controllers/workerServices.controllers";
+import { createWorkersServicesController, deleteWorkerServiceController, listWorkerServicesController, listWorkersServicesController, retrieveWorkersServicesController } from "../Controllers/workerServices.controllers";
 import Users from "../Entities/users.entity";
+import UserServices from "../Entities/userServices.entity";
+import WorkerServices from "../Entities/workerServices.entity";
 
 import ensureAuthMiddleware from "../Middlewares/ensureAuth.middleware";
 import ensureIsAdmMiddleware from "../Middlewares/ensureIsAdm.middleware";
 import { ensureIsValidIdMiddleware } from "../Middlewares/ensureIsValidId.middleware";
+import ensureIsWorker from "../Middlewares/ensureIsWorker.middleware";
 
 const workerServicesRoutes = Router()
 
+workerServicesRoutes.post('/:userId', ensureAuthMiddleware, ensureIsValidIdMiddleware(UserServices), createWorkersServicesController)
 
 workerServicesRoutes.get('', ensureAuthMiddleware, ensureIsAdmMiddleware, listWorkersServicesController)
-workerServicesRoutes.post('/:userId', ensureAuthMiddleware, ensureIsValidIdMiddleware(Users), createWorkersServicesController)
-workerServicesRoutes.get('/:userId', ensureAuthMiddleware, ensureIsValidIdMiddleware(Users), retrieveWorkersServicesController)
-workerServicesRoutes.delete('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(Users), deleteWorkerServiceController )
+workerServicesRoutes.get('/:userId', ensureAuthMiddleware, ensureIsValidIdMiddleware(WorkerServices), retrieveWorkersServicesController)
+workerServicesRoutes.get('/worker/:userId', ensureAuthMiddleware, ensureIsWorker, ensureIsValidIdMiddleware(Users), listWorkerServicesController)
+
+workerServicesRoutes.delete('/:userId', ensureAuthMiddleware, ensureIsAdmMiddleware, ensureIsValidIdMiddleware(WorkerServices), deleteWorkerServiceController )
 
 export default workerServicesRoutes

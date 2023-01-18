@@ -1,5 +1,6 @@
 import {
     CreateDateColumn,
+    DeleteDateColumn,
     Entity,
     JoinColumn,
     ManyToOne,
@@ -17,6 +18,9 @@ class WorkerServices {
 
     @CreateDateColumn()
     acceptedAt: Date;
+
+    @DeleteDateColumn({ nullable: true })
+    deletedAt: Date;
 
     @ManyToOne(() => Users, user => user.id)
     user: Users;
