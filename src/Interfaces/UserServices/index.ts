@@ -47,3 +47,14 @@ export interface IUserServiceResponse {
         longitude: number
     }
 }
+
+export interface IUserServiceUpdateRequest {
+    title?: string;
+    description?: string;
+    femaleOnly?: boolean;
+    category?: string;
+    location?: {
+        latitude: number
+        longitude: number
+    }
+}

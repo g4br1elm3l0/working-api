@@ -1,12 +1,10 @@
 
 import UserServices from '../../Entities/userServices.entity'
 import AppDataSource from '../../data-source'
-import Users from '../../Entities/users.entity'
-import { IJob, IJobUpdate } from '../../Interfaces/Jobs'
 import { oneUserServiceResponseSerializer } from '../../Serializers/userService.serializers'
-import {IUserServiceRequest} from '../../Interfaces/UserServices'
+import { IUserServiceUpdateRequest } from '../../Interfaces/UserServices'
 
-const updateServiceService = async (userData: IUserServiceRequest, userId: string) => {
+const updateServiceService = async (userData: IUserServiceUpdateRequest, userId: string) => {
 
     const serviceRepository = AppDataSource.getRepository(UserServices)
 
