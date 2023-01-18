@@ -1,13 +1,6 @@
 import * as yup from "yup"
 import { SchemaOf } from "yup";
-import { IWorkerServiceCreateReturn, IWorkerServiceListReturn, IWorkerServiceRequest } from "../Interfaces/WorkerServices";
-
-export const workerServiceSerializer: SchemaOf<IWorkerServiceRequest> = yup.object().shape({
-    userId: yup.string().required(),
-    userServiceId: yup.string().required(),
-    acceptedAt: yup.string()
-    
-});
+import { IWorkerServiceCreateReturn, IWorkerServiceListReturn } from "../Interfaces/WorkerServices";
 
 export const createWorkerServiceReturnSerializer: SchemaOf<IWorkerServiceCreateReturn> = yup.object().shape({
     user: yup.object().shape({
