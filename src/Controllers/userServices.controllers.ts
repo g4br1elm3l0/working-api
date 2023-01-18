@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IServiceUpdate } from "../Interfaces/Services";
-import { IUserServiceRequest } from "../Interfaces/UserServices";
+import { IUserServiceRequest, IUserServiceUpdateRequest } from "../Interfaces/UserServices";
 import { createUserServiceService } from "../Services/UserServices/createUserService.service";
 import deleteUserService from "../Services/UserServices/deleteUserService.service";
 import { listAllUserServicesService } from "../Services/UserServices/listAllUserServices.service";
@@ -26,20 +26,20 @@ export const listAllUserServicesController = async (req: Request, res: Response)
 }
 
 export const listServiceByIdController = async (req: Request, res:Response) => {
-    const serviceId: string = req.params.serviceId
+    const serviceId: string = req.params.servicesId
     const service = await listServiceByIdService(serviceId)
     return res.json(service)
 }
 
 export const updateServiceController = async (req: Request, res: Response) => {
-    const userData: IUserServiceRequest = req.body
-    const serviceId: string = req.params.serviceId
+    const userData: IUserServiceUpdateRequest = req.body
+    const serviceId: string = req.params.servicesId
     const updatedService = await updateServiceService(userData, serviceId)
     return res.json(updatedService)
 }
 
 export const deleteUserServiceController = async (req: Request, res: Response) => {
-    await deleteUserService(req.params.id)
+    await deleteUserService(req.params.userId)
 
     return res.status(204).json({})
 }

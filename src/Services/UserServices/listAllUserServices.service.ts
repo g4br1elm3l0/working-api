@@ -16,10 +16,14 @@ export const listAllUserServicesService = async (): Promise<IUserServiceResponse
             location: true
         }
     });
+    console.log(userServices)
 
-    const correctUserServicesFormat = userServicesResponseSerializer.validate(userServices, {
+    const correctUserServicesFormat = await userServicesResponseSerializer.validate(userServices, {
         stripUnknown: true
     })
+
+    console.log(correctUserServicesFormat);
+    
 
     return correctUserServicesFormat;
 };
