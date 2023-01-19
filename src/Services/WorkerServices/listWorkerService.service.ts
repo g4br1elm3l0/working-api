@@ -14,8 +14,7 @@ export const listWorkerService = async (workerServiceId: string): Promise<IWorke
         },
         relations: {
             userService: true
-        },
-        withDeleted: true
+        }
     })
 
     const correctUsersFormat = listServicesOfWorkerResponseSerializer.validate(workerServicesList, {

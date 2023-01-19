@@ -7,7 +7,7 @@ import AppError from '../../errors';
 import { IUserService, IUserServiceRequest } from '../../Interfaces/UserServices';
 
 export const createUserServiceService = async (serviceData: IUserServiceRequest, userId: string): Promise<IUserService> => {
-
+    
     const userServicesRepository = dataSource.getRepository(UserServices);
     const userRepository = dataSource.getRepository(Users);
     
@@ -17,6 +17,11 @@ export const createUserServiceService = async (serviceData: IUserServiceRequest,
     const searchUser = await userRepository.findOneBy({ id: userId });
     if (!searchUser) {
         throw new AppError("User was not found", 404);
+    }
+    if(serviceData.femaleOnly){
+        if(searchUser.gender.toLowerCase() === "masculino"){
+            throw new AppError("femaleOnly Options can not be used", 403);
+        }
     }
 
     const categoriesRepository = dataSource.getRepository(Categories);

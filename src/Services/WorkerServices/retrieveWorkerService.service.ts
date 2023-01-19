@@ -6,7 +6,6 @@ import { listWorkerServiceReturnSerializer } from "../../Serializers/workerServi
 export const retrieveWorkerService = async (id:string) => {
     const workerRepository = dataSource.getRepository(WorkerServices);
     const workerService = await workerRepository.find({
-        withDeleted: true,
         relations: {
             user: true, userService: true
         },

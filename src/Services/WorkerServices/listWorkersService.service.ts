@@ -10,9 +10,11 @@ export const listWorkersService = async () => {
             user: true, userService: true
         }
     })
-
-    const correctUsersFormat = listWorkerServiceReturnSerializer.validate(workerServicesList, {
-        stripUnknown: true
-    });
-    return correctUsersFormat;
+    if(workerServicesList.length > 0){
+        const correctUsersFormat = await listWorkerServiceReturnSerializer.validate(workerServicesList, {
+            stripUnknown: true
+        });
+        return correctUsersFormat;
+    }
+    return [];
 }

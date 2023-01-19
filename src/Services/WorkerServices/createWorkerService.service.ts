@@ -26,6 +26,16 @@ export const createWorkerService = async (userServiceId: string, userReq:IReqUse
         throw new AppError("User Service was Not Found", 404);
     };
 
+    if (searchUserService.status !== "pendente"){
+        throw new AppError("User Service can not be accepted", 409);
+    };
+
+    if(searchUserService.femaleOnly){
+        if(searchUser.gender.toLowerCase() === "masculino"){
+            throw new AppError("This service can not be accepted by male workers", 403);
+        };
+    };
+
     const searchWorkerServiceByUserService = await workerServiceRepository.findOne({
         where: {
             userService: {

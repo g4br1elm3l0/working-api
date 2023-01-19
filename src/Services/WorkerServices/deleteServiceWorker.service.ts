@@ -28,8 +28,8 @@ const deleteWorkerService = async (userId: string, workerServiceId: string) => {
     });
     userService.status = "pendente";
     await serviceRepository.save(userService);
-    
-    await workerServiceRepository.softRemove(workerService);
+
+    await workerServiceRepository.remove(workerService);
     
     return {};
 }
