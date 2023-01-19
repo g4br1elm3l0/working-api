@@ -1,28 +1,32 @@
-import { 
-    Column, 
-    Entity, 
-    JoinColumn, 
-    ManyToOne, 
-    OneToOne, 
-    PrimaryGeneratedColumn 
+import {
+    CreateDateColumn,
+    DeleteDateColumn,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToOne,
+    PrimaryGeneratedColumn
 } from "typeorm";
+import Users from "./users.entity";
 import UserServices from "./userServices.entity";
-import Workers from "./workers.entity";
+
 
 @Entity("workerServices")
 class WorkerServices {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ nullable: true })
+    @CreateDateColumn()
     acceptedAt: Date;
 
-    @ManyToOne( () => Workers, worker => worker.id)
-    worker: Workers;
+    @DeleteDateColumn({ nullable: true })
+    deletedAt: Date;
+
+    @ManyToOne(() => Users, user => user.id)
+    user: Users;
 
     @OneToOne(() => UserServices)
     @JoinColumn()
     userService: UserServices;
 };
-
 export default WorkerServices;
