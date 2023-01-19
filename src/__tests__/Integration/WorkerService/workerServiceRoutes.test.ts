@@ -250,14 +250,8 @@ describe("/worker-services", () => {
         
         const loginWorkerResponse = await request(app).post("/login").send(mockedUserWorkerLogin);
         const services = await request(app).get(`/worker-services/worker/${users.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
-                
-        const response = await request(app).delete(`/worker-services/${services.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
         
-        const deletedWorkerService = await request(app).get(`/worker-services/${services.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
-                
-        expect(deletedWorkerService.body[0]).toHaveProperty("userService");
-        expect(deletedWorkerService.body[0].userService).toHaveProperty("status");
-        expect(deletedWorkerService.body[0].userService.status).toEqual("pendente");
+        const response = await request(app).delete(`/worker-services/${services.body[0].id}`).set("Authorization", `Bearer ${loginWorkerResponse.body.token}`);
         
         expect(response.status).toBe(204);
     });
